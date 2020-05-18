@@ -1,15 +1,17 @@
 package com.synebula.zeus.app.config
 
+import com.google.gson.Gson
+import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.domain.model.IAggregateRoot
 import com.synebula.gaea.domain.repository.IRepository
 import com.synebula.gaea.domain.repository.IRepositoryTyped
 import com.synebula.gaea.log.ILogger
+import com.synebula.gaea.mongo.query.MongoQuery
+import com.synebula.gaea.mongo.query.MongoQueryTyped
+import com.synebula.gaea.mongo.repository.MongoRepository
+import com.synebula.gaea.mongo.repository.MongoRepositoryTyped
 import com.synebula.gaea.query.IQuery
 import com.synebula.gaea.query.IQueryTyped
-import com.synebula.gaea.query.mongo.MongoQuery
-import com.synebula.gaea.query.mongo.MongoQueryTyped
-import com.synebula.gaea.repository.mongo.MongoRepository
-import com.synebula.gaea.repository.mongo.MongoRepositoryTyped
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -25,19 +27,23 @@ open class ZeusBeans {
             : IRepositoryTyped = MongoRepositoryTyped(template)
 
     @Bean
-    open fun <T> typedQuery(template: MongoTemplate, logger: ILogger? = null)
-            : IQueryTyped = MongoQueryTyped(template, logger)
-
-    @Bean
-    open fun <T> query(template: MongoTemplate)
+    open fun <T> mongoQuery(template: MongoTemplate)
             : IQuery<T, String> = MongoQuery(template)
 
     @Bean
-    open fun <T> mongoQuery(template: MongoTemplate)
-            : MongoQuery<T> = MongoQuery(template)
+    open fun <T> mongoTypedQuery(template: MongoTemplate, logger: ILogger? = null)
+            : IQueryTyped = MongoQueryTyped(template, logger)
 
     @Bean
-    open fun <T> mongoTypedQuery(template: MongoTemplate, logger: ILogger? = null)
-            : MongoQueryTyped = MongoQueryTyped(template, logger)
+    open fun gson(): Gson = Gson()
+
+    @Bean
+    open fun serializer(gson: Gson): IJsonSerializer {
+        return object : IJsonSerializer {
+            override fun <S> serialize(src: S): String {
+                return gson.toJson(src)
+            }
+        }
+    }
 
 }

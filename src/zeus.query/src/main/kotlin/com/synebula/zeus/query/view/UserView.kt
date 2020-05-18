@@ -1,6 +1,6 @@
 package com.synebula.zeus.query.view
 
-class AccountView {
+class UserView {
     var id: String = ""
 
     var name: String = ""

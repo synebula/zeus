@@ -1,10 +1,9 @@
 package com.synebula.zeus.domain.service.cmd
 
-import com.synebula.gaea.domain.service.ICommand
+import com.synebula.gaea.domain.service.Command
 
-class AccountCmd : ICommand {
+class UserCmd : Command() {
     var id: String? = null
     var name = ""
     var password = ""
-    override var timestamp = 0L
 }
