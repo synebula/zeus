@@ -1,0 +1,15 @@
+dependencies {
+    compile "com.synebula:gaea.mongo:$gaea_version"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            group 'com.synebula'
+            artifactId 'zeus.view'
+            version "$version"
+            from components.java
+        }
+    }
+}
+

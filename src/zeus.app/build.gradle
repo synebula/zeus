@@ -1,0 +1,28 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_version")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+
+jar.enabled = true    //jar SKIPPED问题,不设置可能会无法打jar
+
+dependencies {
+    compile project(":src:zeus.domain")
+    compile project(":src:zeus.query")
+    compile "com.synebula:gaea.app:$gaea_version"
+    compile "com.synebula:gaea.mongo:$gaea_version"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            group 'com.synebula'
+            artifactId 'zeus.app'
+            version "$version"
+            from components.java
+        }
+    }
+}
+

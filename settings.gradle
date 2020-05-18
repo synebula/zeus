@@ -1,0 +1,6 @@
+rootProject.name = 'myths.zeus'
+
+include 'src:zeus.app'
+include 'src:zeus.domain'
+include 'src:zeus.query'
+
