@@ -6,4 +6,6 @@ class UserCmd : Command() {
     var id: String? = null
     var name = ""
     var password = ""
+    var realName: String? = null
+    var phone: String? = null
 }
