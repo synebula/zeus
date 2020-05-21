@@ -1,4 +1,4 @@
-package com.synebula.zeus.domain.service.cmd
+package com.synebula.zeus.domain.service.cmd.rbac
 
 import com.synebula.gaea.domain.service.Command
 
