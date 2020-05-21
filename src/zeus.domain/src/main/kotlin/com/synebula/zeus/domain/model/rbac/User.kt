@@ -7,4 +7,5 @@ class User(override var id: String? = null) : AggregateRoot<String>() {
     var password: String = ""
     var realName: String? = null
     var phone: String? = null
+    var roleId: String = ""
 }

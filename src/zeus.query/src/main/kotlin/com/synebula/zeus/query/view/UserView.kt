@@ -8,4 +8,6 @@ class UserView {
     var realName: String? = null
 
     var phone: String? = null
+
+    var role: RoleView? = null
 }
