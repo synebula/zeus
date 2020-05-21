@@ -28,7 +28,7 @@ class UserApp(
 
     override fun add(command: UserCmd): HttpMessage {
         val msg = super.add(command)
-        userAdded.added(msg.data.toString())
+        userAdded.added(msg.data.toString(), command.name)
         return msg
     }
 

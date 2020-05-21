@@ -1,5 +1,5 @@
 package com.synebula.zeus.app.component
 
 interface IUserAdded {
-    fun added(userId: String)
+    fun added(id: String, name: String)
 }
