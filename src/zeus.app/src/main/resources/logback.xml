@@ -7,7 +7,7 @@
     <!-- 文件输出格式 -->
     <property name="format" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n"/>
     <!--日志路径-->
-    <property name="path" value="./logs/evaluation"/>
+    <property name="path" value="./logs/zeus"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -31,7 +31,7 @@
         </layout>
     </appender>
 
-    <root level="info">
+    <root level="warn">
         <appender-ref ref="file"/>
     </root>
 </configuration>

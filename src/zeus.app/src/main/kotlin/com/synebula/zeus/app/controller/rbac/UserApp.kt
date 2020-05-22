@@ -1,9 +1,9 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.UnionTypedApp
+import com.synebula.gaea.app.UnionApp
 import com.synebula.gaea.app.component.HttpMessage
 import com.synebula.gaea.log.ILogger
-import com.synebula.gaea.query.IQueryTyped
+import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.app.component.IUserAdded
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/users")
 class UserApp(
     service: IUserService,
-    query: IQueryTyped,
+    query: IQuery,
     logger: ILogger
-) : UnionTypedApp<UserCmd, UserView, String>(
+) : UnionApp<UserCmd, UserView, String>(
     "用户信息", UserView::class.java,
     service, query, logger
 ) {

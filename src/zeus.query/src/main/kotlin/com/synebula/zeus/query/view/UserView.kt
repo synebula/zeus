@@ -5,9 +5,11 @@ class UserView {
 
     var name: String = ""
 
+    var password: String = ""
+
     var realName: String? = null
 
     var phone: String? = null
 
-    var role: RoleView? = null
+    var role: String? = null
 }

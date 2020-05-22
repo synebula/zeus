@@ -8,4 +8,5 @@ class UserCmd : Command() {
     var password = ""
     var realName: String? = null
     var phone: String? = null
+    var role: String? = null
 }

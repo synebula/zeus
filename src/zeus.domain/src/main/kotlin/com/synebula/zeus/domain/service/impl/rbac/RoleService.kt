@@ -7,5 +7,7 @@ import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.model.rbac.Role
 import com.synebula.zeus.domain.service.contr.rbac.IRoleService
 
-class RoleService(repository: IRepository<Role, String>, converter: IObjectConverter, logger: ILogger) :
-    Service<Role, String>(Role::class.java, repository, converter, logger), IRoleService
+class RoleService(
+    repository: IRepository,
+    converter: IObjectConverter, logger: ILogger
+) : Service<Role, String>(Role::class.java, repository, converter, logger), IRoleService
