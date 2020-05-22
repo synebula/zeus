@@ -12,9 +12,12 @@ import com.synebula.gaea.mongo.repository.MongoRepository
 import com.synebula.gaea.mongo.repository.MongoRepositoryTyped
 import com.synebula.gaea.query.IQuery
 import com.synebula.gaea.query.IQueryTyped
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.web.filter.CharacterEncodingFilter
+
 
 @Configuration
 open class ZeusBeans {
@@ -45,5 +48,4 @@ open class ZeusBeans {
             }
         }
     }
-
 }
