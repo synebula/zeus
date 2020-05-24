@@ -1,5 +1,8 @@
 package com.synebula.zeus.query.view
 
+import com.synebula.gaea.query.Operator
+import com.synebula.gaea.query.Where
+
 class UserView {
     var id: String = ""
 
@@ -7,6 +10,7 @@ class UserView {
 
     var password: String = ""
 
+    @Where(Operator.like)
     var realName: String? = null
 
     var phone: String? = null
