@@ -1,6 +1,7 @@
 package com.synebula.zeus.query.contr
 
 import com.synebula.gaea.data.message.Message
+import com.synebula.zeus.query.view.SignUserView
 
 interface IUserQuery {
     /**
@@ -11,5 +12,5 @@ interface IUserQuery {
      *
      * @return 返回消息体, 200为登录成功, data为用户ID
      */
-    fun signIn(name: String, password: String): Message<String>
+    fun signIn(name: String, password: String): Message<SignUserView>
 }
