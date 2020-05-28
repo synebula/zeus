@@ -2,17 +2,13 @@ package com.synebula.zeus.app.controller.rbac
 
 import com.synebula.gaea.app.UnionApp
 import com.synebula.gaea.app.component.HttpMessage
+import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.query.IQuery
-import com.synebula.zeus.app.component.IUserAdded
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.view.UserView
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
@@ -24,14 +20,6 @@ class UserApp(
     "用户信息", UserView::class.java,
     service, query, logger
 ) {
-    @Autowired
-    lateinit var userAdded: IUserAdded
-
-    override fun add(command: UserCmd): HttpMessage {
-        val msg = super.add(command)
-        userAdded.added(msg.data.toString(), command.name)
-        return msg
-    }
 
     /**
      * 激活用户
@@ -39,10 +27,32 @@ class UserApp(
      * @param key 用户ID
      */
     @GetMapping("/{key}/active")
-    fun active(@PathVariable key: String): String {
+    fun active(@PathVariable key: String, token: String): String {
         this.safeExecute("激活用户出现异常") {
-            (this.service as IUserService).active(key)
+            (this.service as IUserService).active(key, token)
         }
         return "<html><body><div style='text-align: center; padding: 100px;'><h2>激活成功！</h2></div></body></html>"
+    }
+
+    @GetMapping("/{name}/forgot")
+    fun forgot(@PathVariable name: String): HttpMessage {
+        return this.safeExecute("遗忘用户密码出现异常") {
+            val users = this.query?.list(mapOf(Pair("name", name)), UserView::class.java)
+            if (users != null && users.isNotEmpty()) {
+                it.load((this.service as IUserService).forgotPassword(users[0].id))
+
+            } else {
+                it.status = Status.Failure
+                it.message = "找不到该用户信息"
+            }
+        }
+    }
+
+
+    @PutMapping("/{key}/password")
+    fun changePassword(@PathVariable key: String, password: String, token: String): HttpMessage {
+        return this.safeExecute("修改用户密码出现异常") {
+            it.load((this.service as IUserService).changePassword(key, password, token))
+        }
     }
 }

@@ -8,4 +8,5 @@ class User(override var id: String? = null) : AggregateRoot<String>() {
     var realName: String? = null
     var phone: String? = null
     var role: String = ""
+    var token: String? = null
 }

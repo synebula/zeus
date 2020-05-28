@@ -23,7 +23,7 @@ class UserQuery(template: MongoTemplate) :
                 .and("password").isEqualTo(password.toMd5())
                 .and("alive").isEqualTo(true)
         )
-        val user = this.template.findOne(query, this.clazz!!)
+        val user = this.template.findOne(query, this.clazz!!, "user")
         return if (user != null)
             Message(SignUserView(user.id, user.name, user.role ?: ""))
         else
