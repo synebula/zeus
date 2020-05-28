@@ -46,20 +46,22 @@ class UserService(
                 this.repository.update(user, this.clazz)
                 Message(Status.Success, "用户${user.name}激活成功")
             } else {
+                logger.warn(this, "用户${user.name}激活失败, {key: ${key}, token: ${token}")
                 Message(Status.Failure, "用户${user.name}激活失败, 请从系统发送的邮件链接激活用户")
             }
         }
     }
 
-    override fun changePassword(key: String, password: String, token: String): Message<Any> {
+    override fun changePassword(key: String, password: String, token: String?): Message<Any> {
         val user = this.repository.get(key, this.clazz)
-        return if (token == user.token) {
+        return if (user.token == null || token == user.token) {
             user.password = password.toMd5()
             user.token = null
             this.repository.update(user, this.clazz)
             Message()
         } else {
-            Message(Status.Failure, "用户密码修改失败, 请从系统发送的邮件链接中修改密码")
+            logger.warn(this, "用户${user.name}密码修改失败, 系统密码修改令牌:${user.token}, {key: ${key} , token: ${token}")
+            Message(Status.Failure, "用户密码修改失败, 如需重置密码请从系统发送的邮件链接中重置")
         }
     }
 

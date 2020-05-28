@@ -20,16 +20,8 @@ import org.springframework.data.mongodb.core.MongoTemplate
 @Configuration
 open class ZeusBeans {
     @Bean
-    open fun <T : IAggregateRoot<String>> genericRepository(template: MongoTemplate)
-            : IGenericRepository<T, String> = MongoGenericRepository(template)
-
-    @Bean
     open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
             : IRepository = MongoRepository(template)
-
-    @Bean
-    open fun <T> mongoGenericQuery(template: MongoTemplate)
-            : IGenericQuery<T, String> = MongoGenericQuery(template)
 
     @Bean
     open fun <T> mongoQuery(template: MongoTemplate, logger: ILogger? = null)

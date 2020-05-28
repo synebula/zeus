@@ -3,11 +3,13 @@ package com.synebula.zeus.app.controller.rbac
 import com.synebula.gaea.app.UnionApp
 import com.synebula.gaea.app.component.HttpMessage
 import com.synebula.gaea.data.message.Status
+import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.view.UserView
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -20,6 +22,21 @@ class UserApp(
     "用户信息", UserView::class.java,
     service, query, logger
 ) {
+
+    @Autowired
+    lateinit var serializer: IJsonSerializer
+
+    override fun add(command: UserCmd): HttpMessage {
+        return this.safeExecute("查询重复用户信息出错, 用户信息: ${serializer.serialize(command)}") {
+            val list = this.query!!.list(mapOf(Pair("name", command.name)), UserView::class.java)
+            if (list.count() == 0)
+                it.from(super.add(command))
+            else {
+                it.status = Status.Failure
+                it.message = "系统中已存在该用户"
+            }
+        }
+    }
 
     /**
      * 激活用户
@@ -50,7 +67,7 @@ class UserApp(
 
 
     @PutMapping("/{key}/password")
-    fun changePassword(@PathVariable key: String, password: String, token: String): HttpMessage {
+    fun changePassword(@PathVariable key: String, password: String, token: String?): HttpMessage {
         return this.safeExecute("修改用户密码出现异常") {
             it.load((this.service as IUserService).changePassword(key, password, token))
         }

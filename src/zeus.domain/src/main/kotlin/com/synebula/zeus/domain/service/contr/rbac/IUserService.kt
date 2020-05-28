@@ -18,7 +18,7 @@ interface IUserService : IService<String> {
      * @param key 用户ID
      * @param token 激活密令
      */
-    fun changePassword(key: String, password: String, token: String): Message<Any>
+    fun changePassword(key: String, password: String, token: String?): Message<Any>
 
 
     /**
