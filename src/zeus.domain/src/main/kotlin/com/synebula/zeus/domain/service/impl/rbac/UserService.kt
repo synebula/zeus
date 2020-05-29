@@ -52,16 +52,30 @@ class UserService(
         }
     }
 
-    override fun changePassword(key: String, password: String, token: String?): Message<Any> {
+    override fun changePassword(key: String, password: String, newPassword: String): Message<Any> {
         val user = this.repository.get(key, this.clazz)
-        return if (user.token == null || token == user.token) {
+        return if (user.password == password.toMd5()) {
+            user.password = newPassword.toMd5()
+            user.token = null
+            this.repository.update(user, this.clazz)
+            Message()
+        } else {
+            logger.warn(this, "用户修改${user.name}密码失败, 旧密码验证不通过")
+            Message(Status.Failure, "用户修改密码失败, 旧密码验证不通过")
+        }
+    }
+
+
+    override fun resetPassword(key: String, password: String, token: String?): Message<Any> {
+        val user = this.repository.get(key, this.clazz)
+        return if (token == user.token) {
             user.password = password.toMd5()
             user.token = null
             this.repository.update(user, this.clazz)
             Message()
         } else {
-            logger.warn(this, "用户${user.name}密码修改失败, 系统密码修改令牌:${user.token}, {key: ${key} , token: ${token}")
-            Message(Status.Failure, "用户密码修改失败, 如需重置密码请从系统发送的邮件链接中重置")
+            logger.warn(this, "用户重置${user.name}密码失败, 系统密码修改令牌:${user.token}, {key: ${key} , token: ${token}")
+            Message(Status.Failure, "用户重置密码失败, 如需重置密码请从系统发送的邮件链接中重置")
         }
     }
 

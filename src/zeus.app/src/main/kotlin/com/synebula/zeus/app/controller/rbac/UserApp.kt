@@ -65,11 +65,17 @@ class UserApp(
         }
     }
 
+    @PutMapping("/{key}/password/reset")
+    fun resetPassword(@PathVariable key: String, password: String, token: String?): HttpMessage {
+        return this.safeExecute("重置用户密码出现异常") {
+            it.load((this.service as IUserService).resetPassword(key, password, token))
+        }
+    }
 
     @PutMapping("/{key}/password")
-    fun changePassword(@PathVariable key: String, password: String, token: String?): HttpMessage {
+    fun changePassword(@PathVariable key: String, password: String, newPassword: String): HttpMessage {
         return this.safeExecute("修改用户密码出现异常") {
-            it.load((this.service as IUserService).changePassword(key, password, token))
+            it.load((this.service as IUserService).changePassword(key, password, newPassword))
         }
     }
 }
