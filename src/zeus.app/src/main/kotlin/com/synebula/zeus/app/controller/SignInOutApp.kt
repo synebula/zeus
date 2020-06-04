@@ -17,7 +17,7 @@ class SignInOutApp(var query: IUserQuery, override var logger: ILogger) : ISignI
 
     @PostMapping("/in")
     override fun signIn(name: String, password: String): HttpMessage {
-        return this.safeExecute("用户登录出现错误") {
+        return this.safeExecute("用户登录出现异常") {
             it.load(this.query.signIn(name, password))
         }
     }
