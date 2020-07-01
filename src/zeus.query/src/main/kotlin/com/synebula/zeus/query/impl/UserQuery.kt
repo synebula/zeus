@@ -4,8 +4,9 @@ import com.synebula.gaea.data.message.Message
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.extension.toMd5
 import com.synebula.gaea.mongo.query.MongoGenericQuery
-import com.synebula.gaea.mongo.query.MongoQuery
+import com.synebula.gaea.mongo.whereId
 import com.synebula.zeus.query.contr.IUserQuery
+import com.synebula.zeus.query.view.RoleView
 import com.synebula.zeus.query.view.SignUserView
 import com.synebula.zeus.query.view.UserView
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -24,9 +25,10 @@ class UserQuery(template: MongoTemplate) :
                 .and("alive").isEqualTo(true)
         )
         val user = this.template.findOne(query, this.clazz!!, "user")
-        return if (user != null)
-            Message(SignUserView(user.id, user.name, user.role ?: ""))
-        else
+        return if (user != null) {
+            val role = this.template.findOne(whereId(user.role), RoleView::class.java, "role")
+            Message(SignUserView(user.id, user.name, user.realName ?: "", user.role ?: "", role?.name ?: ""))
+        } else
             Message(Status.Failure, "用户名或密码错误")
     }
 }
