@@ -16,4 +16,6 @@ class UserView {
     var phone: String? = null
 
     var role: String? = null
+
+    var group: String? = null
 }

@@ -9,4 +9,5 @@ class UserCmd : Command() {
     var realName: String? = null
     var phone: String? = null
     var role: String? = null
+    var group: String = ""
 }
