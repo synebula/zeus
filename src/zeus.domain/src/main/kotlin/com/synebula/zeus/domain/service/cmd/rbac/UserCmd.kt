@@ -11,4 +11,5 @@ class UserCmd : Command() {
     var role: String? = null
     var group: String = ""
     var alive: Boolean = false
+    var token: String? = null
 }
