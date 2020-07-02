@@ -18,4 +18,8 @@ class UserView {
     var role: String? = null
 
     var group: String? = null
+
+    var token: String? = null
+
+    var alive: Boolean? = null
 }
