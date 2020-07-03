@@ -35,4 +35,9 @@ class UserQuery(template: MongoTemplate) :
         } else
             Message(Status.Failure, "用户名或密码错误")
     }
+
+
+    override fun listUsers(idList: List<String>): List<UserView> {
+        return this.template.find(Query.query(Criteria.where("_id").`in`(idList)), this.clazz!!, "user")
+    }
 }
