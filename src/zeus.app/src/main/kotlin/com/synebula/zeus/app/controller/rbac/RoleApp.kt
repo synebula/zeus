@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.UnionApp
+import com.synebula.gaea.app.Application
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.domain.service.cmd.rbac.RoleCmd
@@ -15,7 +15,7 @@ class RoleApp(
     service: IRoleService,
     query: IQuery,
     logger: ILogger
-) : UnionApp<RoleCmd, RoleView, String>(
+) : Application<RoleCmd, RoleView, String>(
     "用户信息", RoleView::class.java,
     service, query, logger
 )

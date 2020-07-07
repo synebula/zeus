@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.UnionApp
+import com.synebula.gaea.app.Application
 import com.synebula.gaea.app.component.HttpMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
@@ -18,7 +18,7 @@ class UserApp(
     service: IUserService,
     query: IQuery,
     logger: ILogger
-) : UnionApp<UserCmd, UserView, String>(
+) : Application<UserCmd, UserView, String>(
     "用户信息", UserView::class.java,
     service, query, logger
 ) {
