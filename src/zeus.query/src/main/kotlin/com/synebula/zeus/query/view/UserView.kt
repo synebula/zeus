@@ -1,8 +1,10 @@
 package com.synebula.zeus.query.view
 
+import com.synebula.gaea.query.annotation.Table
 import com.synebula.gaea.query.annotation.Where
 import com.synebula.gaea.query.type.Operator
 
+@Table("user")
 class UserView {
     var id: String = ""
 
