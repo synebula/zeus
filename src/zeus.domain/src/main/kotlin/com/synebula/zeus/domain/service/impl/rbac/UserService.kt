@@ -6,10 +6,12 @@ import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.domain.repository.IRepository
 import com.synebula.gaea.domain.service.ICommand
 import com.synebula.gaea.domain.service.Service
-import com.synebula.gaea.extension.*
+import com.synebula.gaea.extension.toMd5
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.model.rbac.User
 import com.synebula.zeus.domain.service.contr.component.IUserNotifier
+import com.synebula.zeus.domain.service.contr.rbac.IGroupService
+import com.synebula.zeus.domain.service.contr.rbac.IRoleService
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import java.util.*
 
@@ -17,9 +19,32 @@ class UserService(
     repository: IRepository,
     converter: IObjectConverter,
     logger: ILogger,
-    var userNotifier: IUserNotifier
-) :
-    Service<User, String>(User::class.java, repository, converter, logger), IUserService {
+    var userNotifier: IUserNotifier,
+    groupService: IGroupService,
+    roleService: IRoleService
+) : Service<User, String>(User::class.java, repository, converter, logger), IUserService {
+
+    init {
+        groupService.addBeforeRemoveListener(this.clazz.name) { id ->
+            val msg = Message<String>()
+            if (this.repository.count(mapOf(Pair("group", id)), this.clazz) > 0) {
+                msg.status = Status.Failure
+                msg.message = "组下还有用户"
+                msg.data = msg.message
+            }
+            msg
+        }
+        roleService.addBeforeRemoveListener(this.clazz.name) { id ->
+            val msg = Message<String>()
+            if (this.repository.count(mapOf(Pair("role", id)), this.clazz) > 0) {
+                msg.status = Status.Failure
+                msg.message = "角色下还有用户"
+                msg.data = msg.message
+            }
+            msg
+        }
+    }
+
     override fun add(command: ICommand): Message<String> {
         val user = this.convert(command)
         user.password = user.password.toMd5()
