@@ -2,7 +2,7 @@ package com.synebula.zeus.domain.model.rbac.resource
 
 import com.synebula.gaea.domain.model.Entity
 
-open class Resource(override var id: String? = null) : Entity<String>() {
+abstract class Resource(override var id: String? = null) : Entity<String>() {
     var name = ""
     var signature = ""
     val uri: String? = null

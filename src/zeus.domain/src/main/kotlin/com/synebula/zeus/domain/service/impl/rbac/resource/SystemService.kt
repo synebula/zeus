@@ -1,4 +1,4 @@
-package com.synebula.zeus.domain.service.impl.rbac
+package com.synebula.zeus.domain.service.impl.rbac.resource
 
 import com.synebula.gaea.data.IObjectConverter
 import com.synebula.gaea.domain.repository.IRepository
@@ -7,7 +7,7 @@ import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.model.rbac.Group
 import com.synebula.zeus.domain.service.ctr.rbac.IGroupService
 
-class GroupService(
+class SystemService(
     repository: IRepository,
     converter: IObjectConverter, logger: ILogger
 ) : Service<Group, String>(Group::class.java, repository, converter, logger), IGroupService
