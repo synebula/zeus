@@ -1,4 +1,4 @@
-package com.synebula.zeus.domain.service.ctr.rbac
+package com.synebula.zeus.domain.service.contr.rbac
 
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.domain.service.IService

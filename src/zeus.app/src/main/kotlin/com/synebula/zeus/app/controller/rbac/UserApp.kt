@@ -7,7 +7,7 @@ import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
-import com.synebula.zeus.domain.service.ctr.rbac.IUserService
+import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.view.UserView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*

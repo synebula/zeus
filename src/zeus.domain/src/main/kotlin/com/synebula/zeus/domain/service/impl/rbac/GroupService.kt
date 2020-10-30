@@ -5,7 +5,7 @@ import com.synebula.gaea.domain.repository.IRepository
 import com.synebula.gaea.domain.service.Service
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.model.rbac.Group
-import com.synebula.zeus.domain.service.ctr.rbac.IGroupService
+import com.synebula.zeus.domain.service.contr.rbac.IGroupService
 
 class GroupService(
     repository: IRepository,

@@ -1,4 +1,4 @@
-package com.synebula.zeus.domain.service.ctr.component
+package com.synebula.zeus.domain.service.contr.component
 
 interface IUserNotifier {
     fun added(id: String, name: String, token: String)
