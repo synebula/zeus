@@ -1,8 +1,6 @@
-package com.synebula.zeus.domain.model.rbac.resource
+package com.synebula.zeus.domain.service.cmd.rbac.resource
 
-import com.synebula.gaea.domain.model.IAggregateRoot
-
-class Page : Resource(), IAggregateRoot<String> {
+class PageCmd : ResourceCmd() {
 
     // 上级页面
     val supPage = 0
@@ -16,6 +14,6 @@ class Page : Resource(), IAggregateRoot<String> {
     // 所属系统
     val system = 0
 
-    override var alive = true
+    var alive = true
 
 }
