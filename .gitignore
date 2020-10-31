@@ -2,5 +2,6 @@
 gradlew*
 build
 gradle
+logs
 
 !.gitignore
