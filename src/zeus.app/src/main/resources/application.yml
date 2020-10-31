@@ -7,3 +7,28 @@ spring:
   data:
     mongodb:
       uri: mongodb://127.0.0.1/zeus
+  mail:
+    send: true
+    target: ge.com
+    sender: gehsrv@163.com
+    protocol: smtp
+    host: smtp.163.com
+    port: 465
+    username: gehsrv@163.com
+    password: SRBPJBLFFVVCPZLZ
+    default-encoding: UTF-8
+    properties:
+      mail:
+        imap:
+          ssl:
+            socketFactory:
+              fallback: false
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.fintech.modules.base.util.mail.MailSSLSocketFactory
+          starttls:
+            enable: true
+            required: true
