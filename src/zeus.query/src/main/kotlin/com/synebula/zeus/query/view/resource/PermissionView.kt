@@ -5,6 +5,7 @@ import com.synebula.zeus.env.ResourceType
 
 class PermissionView() {
     var id: String? = null
+    var role = ""
     var resource = ""
     var type: ResourceType? = null
     var authorization = PermissionType.Allow

@@ -17,13 +17,13 @@ import org.springframework.data.mongodb.core.MongoTemplate
 
 @Configuration
 open class ZeusBeans {
-    @Primary
     @Bean
+    @Primary
     open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
             : IRepository = MongoRepository(template)
 
-    @Primary
     @Bean
+    @Primary
     open fun <T> query(template: MongoTemplate, logger: ILogger? = null)
             : IQuery = MongoQuery(template, logger)
 
