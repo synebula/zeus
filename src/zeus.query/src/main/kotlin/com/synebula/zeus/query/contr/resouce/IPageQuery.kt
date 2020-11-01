@@ -8,5 +8,7 @@ interface IPageQuery : IQuery {
 
     fun withPermission(role: String): List<PageView>
 
+    fun withPermission(role: String, system: String? ): List<PageView>
+
     fun authentication(resource: String, role: String): PermissionType
 }

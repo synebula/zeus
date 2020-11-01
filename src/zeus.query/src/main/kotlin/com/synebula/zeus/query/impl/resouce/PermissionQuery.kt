@@ -16,7 +16,7 @@ class PermissionQuery(template: MongoTemplate) : MongoQuery(template), IPermissi
     override fun resourcePermissions(resourceType: ResourceType, role: String): List<PermissionView> {
         return this.template.find(
                 Query.query(
-                        Criteria.where("resourceType").`is`(resourceType)
+                        Criteria.where("type").`is`(resourceType)
                                 .and("role").`is`(role)
                 ), this.clazz, this.collection)
     }

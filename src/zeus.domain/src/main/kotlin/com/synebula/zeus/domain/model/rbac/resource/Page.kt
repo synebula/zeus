@@ -5,16 +5,16 @@ import com.synebula.gaea.domain.model.IAggregateRoot
 class Page : Resource(), IAggregateRoot<String> {
 
     // 上级页面
-    val supPage = 0
+    var parent = ""
 
     // 页面图标
-    val icon: String? = null
+    var icon: String? = null
 
     // 附加参数
-    val params: String? = null
+    var params: String? = null
 
     // 所属系统
-    val system = 0
+    var system = ""
 
     override var alive = true
 
