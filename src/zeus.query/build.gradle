@@ -1,4 +1,5 @@
 dependencies {
+    compile project(":src:zeus.env")
     compile "com.synebula:gaea.mongo:$gaea_version"
 }
 

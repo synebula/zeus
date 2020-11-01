@@ -20,9 +20,9 @@ class UserService(
     repository: IRepository,
     converter: IObjectConverter,
     logger: ILogger,
-    var userNotifier: IUserNotifier,
     groupService: IGroupService,
-    roleService: IRoleService
+    roleService: IRoleService,
+    var userNotifier: IUserNotifier
 ) : Service<User, String>(User::class.java, repository, converter, logger), IUserService {
 
     init {

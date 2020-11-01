@@ -8,23 +8,40 @@ import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.mongo.query.MongoQuery
 import com.synebula.gaea.mongo.repository.MongoRepository
 import com.synebula.gaea.query.IQuery
+import com.synebula.zeus.domain.service.contr.component.IUserNotifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.data.mongodb.core.MongoTemplate
 
 
 @Configuration
 open class ZeusBeans {
+    @Primary
     @Bean
     open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
             : IRepository = MongoRepository(template)
 
+    @Primary
     @Bean
-    open fun <T> mongoQuery(template: MongoTemplate, logger: ILogger? = null)
+    open fun <T> query(template: MongoTemplate, logger: ILogger? = null)
             : IQuery = MongoQuery(template, logger)
 
     @Bean
     open fun gson(): Gson = Gson()
+
+    @Bean
+    open fun userNotifier(): IUserNotifier {
+        return object : IUserNotifier {
+            override fun added(id: String, name: String, token: String) {
+
+            }
+
+            override fun forgot(id: String, name: String, token: String) {
+            }
+
+        }
+    }
 
     @Bean
     open fun serializer(gson: Gson): IJsonSerializer {

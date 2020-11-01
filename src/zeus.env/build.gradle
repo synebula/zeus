@@ -1,5 +1,4 @@
 dependencies {
-    compile project(":src:zeus.env")
     compile "com.synebula:gaea:$gaea_version"
 }
 
@@ -7,7 +6,7 @@ publishing {
     publications {
         publish(MavenPublication) {
             group 'com.synebula'
-            artifactId 'zeus.domain'
+            artifactId 'zeus.env'
             version "$version"
             from components.java
         }
