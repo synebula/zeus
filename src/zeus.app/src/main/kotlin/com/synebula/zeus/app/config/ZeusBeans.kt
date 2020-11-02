@@ -31,19 +31,6 @@ open class ZeusBeans {
     open fun gson(): Gson = Gson()
 
     @Bean
-    open fun userNotifier(): IUserNotifier {
-        return object : IUserNotifier {
-            override fun added(id: String, name: String, token: String) {
-
-            }
-
-            override fun forgot(id: String, name: String, token: String) {
-            }
-
-        }
-    }
-
-    @Bean
     open fun serializer(gson: Gson): IJsonSerializer {
         return object : IJsonSerializer {
             override fun <S> serialize(src: S): String {

@@ -36,7 +36,7 @@ class InterfaceQuery(template: MongoTemplate, var permissionQuery: IPermissionQu
         }
     }
 
-    override fun authentication(resource: String, role: String): PermissionType {
+    override fun authentication(resource: String, role: String): PermissionType? {
         return this.permissionQuery.authentication(ResourceType.Interface, resource, role)
     }
 }

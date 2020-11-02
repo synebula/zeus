@@ -8,5 +8,5 @@ interface ISystemQuery : IQuery {
 
     fun withPermission(role: String): List<SystemView>
 
-    fun authentication(resource: String, role: String): PermissionType
+    fun authentication(resource: String, role: String): PermissionType?
 }

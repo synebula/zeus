@@ -33,7 +33,7 @@ class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, 
         }
     }
 
-    override fun authentication(resource: String, role: String): PermissionType {
+    override fun authentication(resource: String, role: String): PermissionType? {
         return this.permissionQuery.authentication(ResourceType.Page, resource, role)
     }
 }

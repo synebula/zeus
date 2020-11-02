@@ -21,13 +21,13 @@ class PermissionQuery(template: MongoTemplate) : MongoQuery(template), IPermissi
                 ), this.clazz, this.collection)
     }
 
-    override fun authentication(resourceType: ResourceType, resource: String, role: String): PermissionType {
+    override fun authentication(resourceType: ResourceType, resource: String, role: String): PermissionType? {
         val permission = this.template.findOne(
                 Query.query(
-                        Criteria.where("resourceType").`is`(resourceType)
+                        Criteria.where("type").`is`(resourceType)
                                 .and("resource").`is`(resource)
                                 .and("role").`is`(role)
                 ), this.clazz, this.collection)
-        return permission?.authorization ?: PermissionType.Allow
+        return permission?.authorization
     }
 }

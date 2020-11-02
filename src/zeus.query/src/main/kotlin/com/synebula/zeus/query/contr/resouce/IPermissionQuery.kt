@@ -9,5 +9,5 @@ interface IPermissionQuery : IQuery {
 
     fun resourcePermissions(resourceType: ResourceType, role: String): List<PermissionView>
 
-    fun authentication(resourceType: ResourceType, resource: String, role: String): PermissionType
+    fun authentication(resourceType: ResourceType, resource: String, role: String): PermissionType?
 }

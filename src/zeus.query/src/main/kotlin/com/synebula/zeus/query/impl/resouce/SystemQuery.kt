@@ -16,7 +16,7 @@ class SystemQuery(template: MongoTemplate, var permissionQuery: PermissionQuery)
         return systems.filter { i -> permissions.find { p -> i.id == p.resource }?.authorization == PermissionType.Allow }
     }
 
-    override fun authentication(resource: String, role: String): PermissionType {
+    override fun authentication(resource: String, role: String): PermissionType? {
         return this.permissionQuery.authentication(ResourceType.System, resource, role)
     }
 }

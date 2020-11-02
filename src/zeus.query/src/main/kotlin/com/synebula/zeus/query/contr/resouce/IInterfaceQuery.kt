@@ -10,5 +10,5 @@ interface IInterfaceQuery : IQuery {
 
     fun withPermission(role: String, system: String?): List<InterfaceView>
 
-    fun authentication(resource: String, role: String): PermissionType
+    fun authentication(resource: String, role: String): PermissionType?
 }
