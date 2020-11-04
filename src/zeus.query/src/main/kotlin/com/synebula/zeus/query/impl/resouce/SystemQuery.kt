@@ -13,7 +13,7 @@ class SystemQuery(template: MongoTemplate, var permissionQuery: PermissionQuery)
     override fun withPermission(role: String): List<SystemView> {
         val systems = this.list(mapOf(), this.clazz)
         val permissions = this.permissionQuery.resourcePermissions(ResourceType.System, role)
-        return systems.filter { i -> permissions.find { p -> i.id == p.resource }?.authorization == PermissionType.Allow }
+        return systems.filter { i -> permissions.find { p -> i.id == p.resource }?.authority == PermissionType.Allow }
     }
 
     override fun authentication(resource: String, role: String): PermissionType? {

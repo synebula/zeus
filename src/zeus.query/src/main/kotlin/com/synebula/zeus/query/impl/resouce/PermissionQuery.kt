@@ -28,6 +28,6 @@ class PermissionQuery(template: MongoTemplate) : MongoQuery(template), IPermissi
                                 .and("resource").`is`(resource)
                                 .and("role").`is`(role)
                 ), this.clazz, this.collection)
-        return permission?.authorization
+        return permission?.authority
     }
 }

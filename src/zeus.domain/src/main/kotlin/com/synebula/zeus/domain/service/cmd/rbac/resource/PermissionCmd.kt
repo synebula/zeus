@@ -9,5 +9,5 @@ class PermissionCmd : Command() {
     var role = ""
     var resource = ""
     var type: ResourceType? = null
-    var authorization = PermissionType.Allow
+    var authority = PermissionType.Allow
 }
