@@ -32,7 +32,7 @@ class InterfaceQuery(template: MongoTemplate, var permissionQuery: IPermissionQu
         val permissions = this.permissionQuery.resourcePermissions(ResourceType.Interface, role)
         return interfaces.filter { i ->
             val permission = permissions.find { p -> i.id == p.resource }
-            permission == null || permission.authorization == PermissionType.Allow
+            permission == null || permission.authority == PermissionType.Allow
         }
     }
 
