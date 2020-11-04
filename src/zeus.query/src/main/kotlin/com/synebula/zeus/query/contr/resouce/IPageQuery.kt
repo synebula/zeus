@@ -11,4 +11,6 @@ interface IPageQuery : IQuery {
     fun withPermission(role: String, system: String? ): List<PageView>
 
     fun authentication(resource: String, role: String): PermissionType?
+
+    fun uriAuthentication(path: String, role: String): PermissionType?
 }
