@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
 class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, var systemQuery: ISystemQuery) :
-    MongoQuery(template), IPageQuery {
+        MongoQuery(template), IPageQuery {
     private val clazz = PageView::class.java
 
     override fun withPermission(role: String): List<PageView> {
@@ -40,7 +40,8 @@ class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, 
     }
 
     override fun uriAuthentication(path: String, role: String): PermissionType? {
-        val page = this.template.findOne(Query.query(Criteria.where("uri").`is`(path)), this.clazz) ?: return null
+        val page = this.template.findOne(Query.query(Criteria.where("uri").`is`(path)),
+                this.clazz, this.collection(this.clazz)) ?: return null
         return this.authentication(page.id!!, role)
     }
 }

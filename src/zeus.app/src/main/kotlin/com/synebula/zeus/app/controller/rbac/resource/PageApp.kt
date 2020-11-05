@@ -45,7 +45,7 @@ class PageApp(
     }
 
     @GetMapping("/authentication/{role}")
-    fun pathAuthentication(@PathVariable role: String, uri: String): HttpMessage {
+    fun uriAuthentication(@PathVariable role: String, uri: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->
             msg.data = this.pageQuery.uriAuthentication(uri, role)
         }
