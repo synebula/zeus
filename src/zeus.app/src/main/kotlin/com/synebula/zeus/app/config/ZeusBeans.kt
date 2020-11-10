@@ -17,31 +17,18 @@ import org.springframework.data.mongodb.core.MongoTemplate
 
 @Configuration
 open class ZeusBeans {
-    @Primary
     @Bean
+    @Primary
     open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
             : IRepository = MongoRepository(template)
 
-    @Primary
     @Bean
+    @Primary
     open fun <T> query(template: MongoTemplate, logger: ILogger? = null)
             : IQuery = MongoQuery(template, logger)
 
     @Bean
     open fun gson(): Gson = Gson()
-
-    @Bean
-    open fun userNotifier(): IUserNotifier {
-        return object : IUserNotifier {
-            override fun added(id: String, name: String, token: String) {
-
-            }
-
-            override fun forgot(id: String, name: String, token: String) {
-            }
-
-        }
-    }
 
     @Bean
     open fun serializer(gson: Gson): IJsonSerializer {

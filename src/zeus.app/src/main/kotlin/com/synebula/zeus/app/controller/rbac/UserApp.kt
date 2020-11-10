@@ -10,14 +10,13 @@ import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.view.UserView
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
 class UserApp(
     service: IUserService,
-    @Qualifier("query") query: IQuery,
+    query: IQuery,
     logger: ILogger
 ) : Application<UserCmd, UserView, String>(
     "用户信息", UserView::class.java,
