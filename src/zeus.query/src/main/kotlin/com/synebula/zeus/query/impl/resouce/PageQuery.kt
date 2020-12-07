@@ -31,7 +31,7 @@ class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, 
         val permissions = this.permissionQuery.resourcePermissions(ResourceType.Page, role)
         return pages.filter { i ->
             val permission = permissions.find { p -> i.id == p.resource }
-            permission == null || permission.authority == PermissionType.Allow
+            permission != null && permission.authority == PermissionType.Allow
         }
     }
 
