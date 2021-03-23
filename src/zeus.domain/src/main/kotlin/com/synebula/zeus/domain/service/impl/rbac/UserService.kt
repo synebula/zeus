@@ -22,7 +22,7 @@ class UserService(
     logger: ILogger,
     groupService: IGroupService,
     roleService: IRoleService,
-    var userNotifier: IUserNotifier
+    var userNotifier: IUserNotifier?
 ) : Service<User, String>(User::class.java, repository, converter, logger), IUserService {
 
     init {
@@ -50,7 +50,7 @@ class UserService(
         user.token = UUID.randomUUID().toString()
         user.alive = false
         this.repository.add(user, this.clazz)
-        userNotifier.added(user.id!!, user.name, user.token!!)
+        userNotifier?.added(user.id!!, user.name, user.token!!)
         return DataMessage(user.id!!)
     }
 
@@ -108,7 +108,7 @@ class UserService(
         return if (user.alive) {
             user.token = UUID.randomUUID().toString()
             this.repository.update(user, this.clazz)
-            userNotifier.forgot(user.id!!, user.name, user.token!!)
+            userNotifier?.forgot(user.id!!, user.name, user.token!!)
             DataMessage()
         } else
             DataMessage(Status.Failure, "用户还未激活, 请先激活用户")

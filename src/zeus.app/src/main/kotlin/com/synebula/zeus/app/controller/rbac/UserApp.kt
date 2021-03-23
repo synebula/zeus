@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
-class UserApp(
+open class UserApp(
     service: IUserService,
     query: IQuery,
     logger: ILogger

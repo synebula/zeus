@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/permissions")
-class PermissionApp(
+open class PermissionApp(
         service: IPermissionService,
         query: IPermissionQuery,
         logger: ILogger

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/systems")
-class SystemApp(
+open class SystemApp(
     service: ISystemService,
     logger: ILogger,
     var systemQuery: ISystemQuery

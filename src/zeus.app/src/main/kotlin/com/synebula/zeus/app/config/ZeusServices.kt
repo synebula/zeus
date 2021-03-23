@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component
 @Component
 @ComponentScan(
     basePackages = [
-        "com.synebula.gaea.app.component",
         "com.synebula.zeus.domain.service.impl",
         "com.synebula.zeus.query.impl"
     ],
     includeFilters = [Filter(type = FilterType.CUSTOM, classes = [AllTypeFilter::class])]
 )
-class ZeusSpring
+class ZeusServices

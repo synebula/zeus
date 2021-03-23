@@ -10,12 +10,18 @@ import com.synebula.gaea.mongo.repository.MongoRepository
 import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.domain.service.contr.component.IUserNotifier
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.data.mongodb.core.MongoTemplate
 
 
 @Configuration
+@ComponentScan(
+    basePackages = [
+        "com.synebula.gaea.app.component"
+    ]
+)
 open class ZeusBeans {
     @Bean
     @Primary

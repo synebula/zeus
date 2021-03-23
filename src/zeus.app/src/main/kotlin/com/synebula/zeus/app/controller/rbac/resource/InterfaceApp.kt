@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/interfaces")
-class InterfaceApp(
+open class InterfaceApp(
     service: IInterfaceService,
     logger: ILogger,
     var interfaceQuery: IInterfaceQuery

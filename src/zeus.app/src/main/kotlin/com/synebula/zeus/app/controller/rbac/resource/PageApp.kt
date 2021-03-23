@@ -2,6 +2,7 @@ package com.synebula.zeus.app.controller.rbac.resource
 
 import com.synebula.gaea.app.Application
 import com.synebula.gaea.app.component.HttpMessage
+import com.synebula.gaea.app.component.aop.annotation.ModuleName
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.service.cmd.rbac.resource.PageCmd
 import com.synebula.zeus.domain.service.contr.rbac.resource.IPageService
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/pages")
-class PageApp(
+@ModuleName("页面")
+open class PageApp(
     service: IPageService,
     logger: ILogger,
     var pageQuery: IPageQuery
@@ -23,11 +25,15 @@ class PageApp(
     service, pageQuery, logger
 ) {
 
+    override fun list(params: LinkedHashMap<String, Any>): HttpMessage {
+        return super.list(params)
+    }
+
     @GetMapping("/in-system/{system}/permission/{role}")
     fun withSystemPermission(@PathVariable system: String, @PathVariable role: String): HttpMessage {
-        return this.safeExecute("获取有权资源列表失败") { msg ->
-            msg.data = this.pageQuery.withPermission(role, system)
-        }
+        val msg = HttpMessage()
+        msg.data = this.pageQuery.withPermission(role, system)
+        return msg
     }
 
     @GetMapping("/permission/{role}")

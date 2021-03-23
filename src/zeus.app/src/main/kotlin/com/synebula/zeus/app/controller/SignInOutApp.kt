@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/sign")
-class SignInOutApp(template: MongoTemplate, override var logger: ILogger?) : IApplication {
+open class SignInOutApp(template: MongoTemplate, override var logger: ILogger?) : IApplication {
     var query: IUserQuery = UserQuery(template)
 
     override var name: String = "用户登录管理"

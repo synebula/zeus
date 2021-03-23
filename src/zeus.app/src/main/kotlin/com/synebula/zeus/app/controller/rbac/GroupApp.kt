@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/groups")
-class GroupApp(
+open class GroupApp(
     service: IGroupService,
     query: IQuery,
     logger: ILogger
