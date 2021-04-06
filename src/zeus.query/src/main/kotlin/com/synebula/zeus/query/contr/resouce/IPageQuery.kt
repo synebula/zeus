@@ -6,11 +6,11 @@ import com.synebula.zeus.query.view.resource.PageView
 
 interface IPageQuery : IQuery {
 
-    fun withPermission(role: String): List<PageView>
+    fun authorized(role: String): List<PageView>
 
-    fun withPermission(role: String, system: String? ): List<PageView>
+    fun authorized(role: String, system: String? ): List<PageView>
 
-    fun authentication(resource: String, role: String): PermissionType?
+    fun authorize(resource: String, role: String): PermissionType?
 
-    fun uriAuthentication(path: String, role: String): PermissionType?
+    fun uriAuthorize(path: String, role: String): PermissionType?
 }

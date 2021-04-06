@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class ZeusAspect : AppAspect() {
 
-    @Pointcut("execution(* com.synebula.zeus.app.controller..*(..))")
+    @Pointcut("target(com.synebula.gaea.app.IApplication)")
     override fun func() {
     }
 }

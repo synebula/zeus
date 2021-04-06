@@ -22,22 +22,22 @@ import org.springframework.data.mongodb.core.MongoTemplate
         "com.synebula.gaea.app.component"
     ]
 )
-open class ZeusBeans {
+class ZeusBeans {
     @Bean
     @Primary
-    open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
+    fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
             : IRepository = MongoRepository(template)
 
     @Bean
     @Primary
-    open fun <T> query(template: MongoTemplate, logger: ILogger? = null)
+    fun <T> query(template: MongoTemplate, logger: ILogger? = null)
             : IQuery = MongoQuery(template, logger)
 
     @Bean
-    open fun gson(): Gson = Gson()
+    fun gson(): Gson = Gson()
 
     @Bean
-    open fun serializer(gson: Gson): IJsonSerializer {
+    fun serializer(gson: Gson): IJsonSerializer {
         return object : IJsonSerializer {
             override fun <S> serialize(src: S): String {
                 return gson.toJson(src)

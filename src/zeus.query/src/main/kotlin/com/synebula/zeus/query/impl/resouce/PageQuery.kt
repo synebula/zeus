@@ -12,16 +12,16 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
 class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, var systemQuery: ISystemQuery) :
-        MongoQuery(template), IPageQuery {
+    MongoQuery(template), IPageQuery {
     private val clazz = PageView::class.java
 
-    override fun withPermission(role: String): List<PageView> {
-        return this.withPermission(role, null)
+    override fun authorized(role: String): List<PageView> {
+        return this.authorized(role, null)
     }
 
-    override fun withPermission(role: String, system: String?): List<PageView> {
+    override fun authorized(role: String, system: String?): List<PageView> {
         if (system != null) {
-            val permission = this.systemQuery.authentication(system, role)
+            val permission = this.systemQuery.authorize(system, role)
             if (permission == PermissionType.Deny)
                 return listOf()
         }
@@ -35,13 +35,15 @@ class PageQuery(template: MongoTemplate, var permissionQuery: IPermissionQuery, 
         }
     }
 
-    override fun authentication(resource: String, role: String): PermissionType? {
+    override fun authorize(resource: String, role: String): PermissionType {
         return this.permissionQuery.authentication(ResourceType.Page, resource, role)
     }
 
-    override fun uriAuthentication(path: String, role: String): PermissionType? {
-        val page = this.template.findOne(Query.query(Criteria.where("uri").`is`(path)),
-                this.clazz, this.collection(this.clazz)) ?: return null
-        return this.authentication(page.id!!, role)
+    override fun uriAuthorize(path: String, role: String): PermissionType? {
+        val page = this.template.findOne(
+            Query.query(Criteria.where("uri").`is`(path)),
+            this.clazz, this.collection(this.clazz)
+        ) ?: return null
+        return this.authorize(page.id!!, role)
     }
 }

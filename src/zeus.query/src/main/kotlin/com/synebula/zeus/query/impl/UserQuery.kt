@@ -29,7 +29,7 @@ class UserQuery(var template: MongoTemplate) : IUserQuery {
             val group = this.template.findOne(whereId(user.group), GroupView::class.java, "group")
             DataMessage(
                 SignUserView(
-                    user.id, user.name, user.realName ?: "",
+                    user.id, user.realName ?: "",
                     user.role ?: "", role?.name ?: "",
                     user.group ?: "", group?.name ?: ""
                 )

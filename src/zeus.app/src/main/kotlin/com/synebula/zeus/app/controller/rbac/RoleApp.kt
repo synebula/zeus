@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/roles")
-open class RoleApp(
+class RoleApp(
     service: IRoleService,
     query: IQuery,
     logger: ILogger

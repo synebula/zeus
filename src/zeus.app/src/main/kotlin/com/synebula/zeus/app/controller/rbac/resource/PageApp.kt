@@ -1,8 +1,8 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
 import com.synebula.gaea.app.Application
-import com.synebula.gaea.app.component.HttpMessage
 import com.synebula.gaea.app.component.aop.annotation.ModuleName
+import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.service.cmd.rbac.resource.PageCmd
 import com.synebula.zeus.domain.service.contr.rbac.resource.IPageService
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/pages")
 @ModuleName("页面")
-open class PageApp(
+class PageApp(
     service: IPageService,
     logger: ILogger,
     var pageQuery: IPageQuery
@@ -25,35 +25,31 @@ open class PageApp(
     service, pageQuery, logger
 ) {
 
-    override fun list(params: LinkedHashMap<String, Any>): HttpMessage {
-        return super.list(params)
-    }
-
-    @GetMapping("/in-system/{system}/permission/{role}")
-    fun withSystemPermission(@PathVariable system: String, @PathVariable role: String): HttpMessage {
+    @GetMapping("/in-system/{system}/authorized/{role}")
+    fun authorized(@PathVariable system: String, @PathVariable role: String): HttpMessage {
         val msg = HttpMessage()
-        msg.data = this.pageQuery.withPermission(role, system)
+        msg.data = this.pageQuery.authorized(role, system)
         return msg
     }
 
-    @GetMapping("/permission/{role}")
-    fun withPermission(@PathVariable role: String): HttpMessage {
+    @GetMapping("/authorized/{role}")
+    fun authorized(@PathVariable role: String): HttpMessage {
         return this.safeExecute("获取有权资源列表失败") { msg ->
-            msg.data = this.pageQuery.withPermission(role)
+            msg.data = this.pageQuery.authorized(role)
         }
     }
 
-    @GetMapping("/{page}/authentication/{role}")
-    fun authentication(@PathVariable page: String, @PathVariable role: String): HttpMessage {
+    @GetMapping("/{page}/authorize/{role}")
+    fun authorize(@PathVariable page: String, @PathVariable role: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->
-            msg.data = this.pageQuery.authentication(page, role)
+            msg.data = this.pageQuery.authorize(page, role)
         }
     }
 
-    @GetMapping("/authentication/{role}")
-    fun uriAuthentication(@PathVariable role: String, uri: String): HttpMessage {
+    @GetMapping("/authorize/{role}")
+    fun uriAuthorize(@PathVariable role: String, uri: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->
-            msg.data = this.pageQuery.uriAuthentication(uri, role)
+            msg.data = this.pageQuery.uriAuthorize(uri, role)
         }
     }
 

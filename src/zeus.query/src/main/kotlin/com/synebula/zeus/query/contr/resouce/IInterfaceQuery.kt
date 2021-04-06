@@ -6,9 +6,9 @@ import com.synebula.zeus.query.view.resource.InterfaceView
 
 interface IInterfaceQuery : IQuery {
 
-    fun withPermission(role: String): List<InterfaceView>
+    fun authorized(role: String): List<InterfaceView>
 
-    fun withPermission(role: String, system: String?): List<InterfaceView>
+    fun authorized(role: String, system: String?): List<InterfaceView>
 
-    fun authentication(resource: String, role: String): PermissionType?
+    fun authorize(resource: String, role: String): PermissionType?
 }

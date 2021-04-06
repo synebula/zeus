@@ -6,7 +6,7 @@ import com.synebula.zeus.query.view.resource.SystemView
 
 interface ISystemQuery : IQuery {
 
-    fun withPermission(role: String): List<SystemView>
+    fun authorized(role: String): List<SystemView>
 
-    fun authentication(resource: String, role: String): PermissionType?
+    fun authorize(resource: String, role: String): PermissionType?
 }
