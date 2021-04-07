@@ -1,6 +1,7 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
 import com.synebula.gaea.app.Application
+import com.synebula.gaea.app.component.aop.annotation.MethodName
 import com.synebula.gaea.app.component.aop.annotation.ModuleName
 import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.log.ILogger
@@ -25,6 +26,7 @@ class PageApp(
     service, pageQuery, logger
 ) {
 
+    @MethodName("获取角色系统下有权页面")
     @GetMapping("/in-system/{system}/authorized/{role}")
     fun authorized(@PathVariable system: String, @PathVariable role: String): HttpMessage {
         val msg = HttpMessage()
@@ -32,6 +34,7 @@ class PageApp(
         return msg
     }
 
+    @MethodName("获取角色全部有权页面")
     @GetMapping("/authorized/{role}")
     fun authorized(@PathVariable role: String): HttpMessage {
         return this.safeExecute("获取有权资源列表失败") { msg ->
@@ -39,6 +42,7 @@ class PageApp(
         }
     }
 
+    @MethodName("验证角色页面权限")
     @GetMapping("/{page}/authorize/{role}")
     fun authorize(@PathVariable page: String, @PathVariable role: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->
@@ -46,6 +50,7 @@ class PageApp(
         }
     }
 
+    @MethodName("验证角色URL权限")
     @GetMapping("/authorize/{role}")
     fun uriAuthorize(@PathVariable role: String, uri: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->

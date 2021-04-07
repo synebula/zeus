@@ -1,6 +1,7 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
 import com.synebula.gaea.app.Application
+import com.synebula.gaea.app.component.aop.annotation.MethodName
 import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.service.cmd.rbac.resource.SystemCmd
@@ -22,6 +23,7 @@ class SystemApp(
     "系统信息", SystemView::class.java,
     service, systemQuery, logger
 ) {
+    @MethodName("获取角色有权系统")
     @GetMapping("/authorized/{role}")
     fun authorized(@PathVariable role: String): HttpMessage {
         return this.safeExecute("获取有权资源列表失败") { msg ->
@@ -29,6 +31,7 @@ class SystemApp(
         }
     }
 
+    @MethodName("验证角色系统权限")
     @GetMapping("/{system}/authorize/{role}")
     fun authorize(@PathVariable system: String, @PathVariable role: String): HttpMessage {
         return this.safeExecute("获取权限信息失败") { msg ->

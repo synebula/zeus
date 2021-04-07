@@ -1,6 +1,7 @@
 package com.synebula.zeus.app.controller
 
 import com.synebula.gaea.app.IApplication
+import com.synebula.gaea.app.component.aop.annotation.MethodName
 import com.synebula.gaea.app.component.security.TokenManager
 import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.data.message.Status
@@ -37,6 +38,7 @@ class SignInOutApp(override var logger: ILogger?) : IApplication {
 
     override var name: String = "用户登录管理"
 
+    @MethodName("用户登录")
     @PostMapping("/in")
     fun signIn(name: String, password: String, remember: Boolean?): HttpMessage {
         return this.safeExecute("用户登录出现异常") {
@@ -52,11 +54,13 @@ class SignInOutApp(override var logger: ILogger?) : IApplication {
         }
     }
 
+    @MethodName("用户登出")
     @PostMapping("/out")
     fun signOut(user: String): HttpMessage {
         return HttpMessage(user)
     }
 
+    @MethodName("用户注册")
     @PostMapping("/up")
     fun signUp(@RequestBody command: UserCmd): HttpMessage {
         return this.safeExecute("用户注册出错, 用户信息: ${serializer.serialize(command)}") {
