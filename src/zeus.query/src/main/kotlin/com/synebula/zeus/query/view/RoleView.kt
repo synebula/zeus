@@ -6,4 +6,5 @@ import com.synebula.gaea.query.annotation.Table
 class RoleView {
     var id: String? = null
     var name = ""
+    var desc = ""
 }

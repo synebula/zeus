@@ -5,4 +5,5 @@ import com.synebula.gaea.domain.service.Command
 class RoleCmd : Command() {
     var id: String? = null
     var name = ""
+    var desc = ""
 }

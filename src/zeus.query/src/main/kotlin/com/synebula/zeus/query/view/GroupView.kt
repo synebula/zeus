@@ -10,4 +10,6 @@ class GroupView {
 
     @Where(Operator.like)
     var name = ""
+
+    var desc = ""
 }
