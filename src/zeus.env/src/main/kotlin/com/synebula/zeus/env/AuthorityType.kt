@@ -1,6 +1,6 @@
 package com.synebula.zeus.env
 
-enum class PermissionType {
+enum class AuthorityType {
     Default,
     Deny,
     Allow
