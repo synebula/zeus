@@ -60,7 +60,7 @@ class UserService(
      * @param key 用户ID
      */
     override fun active(key: String, token: String): DataMessage<Any> {
-        val user = this.repository.get(key, this.clazz)
+        val user = this.repository.get(key, this.clazz)!!
         return if (user.alive) {
             DataMessage("用户${user.name}无需重复激活")
         } else {
@@ -77,7 +77,7 @@ class UserService(
     }
 
     override fun changePassword(key: String, password: String, newPassword: String): DataMessage<Any> {
-        val user = this.repository.get(key, this.clazz)
+        val user = this.repository.get(key, this.clazz)!!
         return if (user.password == password.toMd5()) {
             user.password = newPassword.toMd5()
             user.token = null
@@ -91,7 +91,7 @@ class UserService(
 
 
     override fun resetPassword(key: String, password: String, token: String?): DataMessage<Any> {
-        val user = this.repository.get(key, this.clazz)
+        val user = this.repository.get(key, this.clazz)!!
         return if (token == user.token) {
             user.password = password.toMd5()
             user.token = null
@@ -104,7 +104,7 @@ class UserService(
     }
 
     override fun forgotPassword(key: String): DataMessage<String> {
-        val user = this.repository.get(key, this.clazz)
+        val user = this.repository.get(key, this.clazz)!!
         return if (user.alive) {
             user.token = UUID.randomUUID().toString()
             this.repository.update(user, this.clazz)
