@@ -28,7 +28,7 @@ class UserApp(
 
     override fun add(command: UserCmd): HttpMessage {
         return this.safeExecute("查询重复用户信息出错, 用户信息: ${serializer.serialize(command)}") {
-            val list = this.query!!.list(mapOf(Pair("name", command.name)), UserView::class.java)
+            val list = this.query.list(mapOf(Pair("name", command.name)), UserView::class.java)
             if (list.count() == 0)
                 it.from(super.add(command))
             else {
@@ -54,8 +54,8 @@ class UserApp(
     @GetMapping("/{name}/forgot")
     fun forgot(@PathVariable name: String): HttpMessage {
         return this.safeExecute("遗忘用户密码出现异常") {
-            val users = this.query?.list(mapOf(Pair("name", name)), UserView::class.java)
-            if (users != null && users.isNotEmpty()) {
+            val users = this.query.list(mapOf(Pair("name", name)), UserView::class.java)
+            if (users.isNotEmpty()) {
                 it.load((this.service as IUserService).forgotPassword(users[0].id))
 
             } else {
