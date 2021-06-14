@@ -46,7 +46,7 @@ class SignInOutApp(override var logger: ILogger?) : IApplication {
             if (message.data != null) {
                 val user = message.data
                 user!!.remember = remember ?: false
-                val token = tokenHelper.sign(message.data!!)
+                val token = tokenHelper.sign(message.data!!, remember ?: false)
                 it.data = token
             } else {
                 it.load(message)
