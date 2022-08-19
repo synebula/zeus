@@ -1,17 +1,15 @@
 package com.synebula.zeus.app.controller
 
 import com.synebula.gaea.app.IApplication
-import com.synebula.gaea.app.component.aop.annotation.MethodName
 import com.synebula.gaea.app.component.security.TokenManager
 import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger
-import com.synebula.gaea.query.IQuery
+import com.synebula.gaea.spring.aop.annotation.Method
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.contr.IUserQuery
-import com.synebula.zeus.query.view.UserView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/sign")
-class SignInOutApp(override var logger: ILogger?) : IApplication {
-    @Autowired
-    lateinit var query: IQuery
+class SignInOutApp(override var logger: ILogger) : IApplication {
 
     @Autowired
     lateinit var userQuery: IUserQuery
@@ -38,7 +34,7 @@ class SignInOutApp(override var logger: ILogger?) : IApplication {
 
     override var name: String = "用户登录管理"
 
-    @MethodName("用户登录")
+    @Method("用户登录")
     @PostMapping("/in")
     fun signIn(name: String, password: String, remember: Boolean?): HttpMessage {
         return this.safeExecute("用户登录出现异常") {
@@ -54,18 +50,18 @@ class SignInOutApp(override var logger: ILogger?) : IApplication {
         }
     }
 
-    @MethodName("用户登出")
+    @Method("用户登出")
     @PostMapping("/out")
     fun signOut(user: String): HttpMessage {
         return HttpMessage(user)
     }
 
-    @MethodName("用户注册")
+    @Method("用户注册")
     @PostMapping("/up")
     fun signUp(@RequestBody command: UserCmd): HttpMessage {
         return this.safeExecute("用户注册出错, 用户信息: ${serializer.serialize(command)}") {
-            val list = this.query.list(mapOf(Pair("name", command.name)), UserView::class.java)
-            if (list.count() == 0) {
+            val list = this.userQuery.list(mapOf(Pair("name", command.name)))
+            if (list.isEmpty()) {
                 val message = userService.add(command)
                 it.data = message.data
             } else {

@@ -4,7 +4,7 @@ import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.query.view.resource.PageView
 
-interface IPageQuery : IQuery {
+interface IPageQuery : IQuery<PageView, String>  {
 
     fun authorized(role: String): List<PageView>
 

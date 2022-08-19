@@ -5,9 +5,9 @@ import com.synebula.gaea.app.struct.HttpMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger
-import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
+import com.synebula.zeus.query.contr.IUserQuery
 import com.synebula.zeus.query.view.UserView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 class UserApp(
     service: IUserService,
-    query: IQuery,
+    query: IUserQuery,
     logger: ILogger
 ) : Application<UserCmd, UserView, String>(
-    "用户信息", UserView::class.java,
-    service, query, logger
+    "用户信息", service, query, logger
 ) {
 
     @Autowired
@@ -28,8 +27,8 @@ class UserApp(
 
     override fun add(command: UserCmd): HttpMessage {
         return this.safeExecute("查询重复用户信息出错, 用户信息: ${serializer.serialize(command)}") {
-            val list = this.query.list(mapOf(Pair("name", command.name)), UserView::class.java)
-            if (list.count() == 0)
+            val list = this.query.list(mapOf(Pair("name", command.name)))
+            if (list.isEmpty())
                 it.from(super.add(command))
             else {
                 it.status = Status.Failure
@@ -54,7 +53,7 @@ class UserApp(
     @GetMapping("/{name}/forgot")
     fun forgot(@PathVariable name: String): HttpMessage {
         return this.safeExecute("遗忘用户密码出现异常") {
-            val users = this.query.list(mapOf(Pair("name", name)), UserView::class.java)
+            val users = this.query.list(mapOf(Pair("name", name)))
             if (users.isNotEmpty()) {
                 it.load((this.service as IUserService).forgotPassword(users[0].id))
 

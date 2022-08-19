@@ -4,7 +4,7 @@ import com.synebula.gaea.query.IQuery
 import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.query.view.resource.SystemView
 
-interface ISystemQuery : IQuery {
+interface ISystemQuery : IQuery<SystemView, String>  {
 
     fun authorized(role: String): List<SystemView>
 
