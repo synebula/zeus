@@ -3,22 +3,22 @@ package com.synebula.zeus.domain.service.impl.rbac
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.IObjectMapper
+import com.synebula.gaea.domain.repository.IRepositoryFactory
 import com.synebula.gaea.domain.service.ICommand
 import com.synebula.gaea.domain.service.Service
 import com.synebula.gaea.ext.toMd5
 import com.synebula.gaea.log.ILogger
 import com.synebula.zeus.domain.model.rbac.User
-import com.synebula.zeus.domain.repository.rbac.IUserRepository
 import com.synebula.zeus.domain.service.component.IUserNotifier
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import java.util.*
 
 class UserService(
-    repository: IUserRepository,
+    factory: IRepositoryFactory,
     mapper: IObjectMapper,
     var userNotifier: IUserNotifier?,
     var logger: ILogger
-) : Service<User, String>(User::class.java, repository, mapper), IUserService {
+) : Service<User, String>(User::class.java, factory.createRepository(User::class.java), mapper), IUserService {
 
 //    init {
 //        groupService.addBeforeRemoveListener(this.clazz.name) { id ->

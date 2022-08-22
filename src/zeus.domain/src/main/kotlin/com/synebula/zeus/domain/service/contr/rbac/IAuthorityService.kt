@@ -1,7 +1,6 @@
 package com.synebula.zeus.domain.service.contr.rbac
 
 import com.synebula.gaea.domain.service.IService
-import com.synebula.zeus.domain.model.rbac.Authority
 import com.synebula.zeus.domain.service.cmd.rbac.AuthorityBatchAddCmd
 import com.synebula.zeus.env.ResourceType
 
