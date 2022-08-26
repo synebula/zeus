@@ -4,3 +4,5 @@ include 'src:zeus.app'
 include 'src:zeus.domain'
 include 'src:zeus.query'
 include 'src:zeus.env'
+include 'src:zeus.repository'
+

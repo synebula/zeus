@@ -1,37 +1,42 @@
 package com.synebula.zeus.app.config
 
 import com.google.gson.Gson
+import com.synebula.gaea.app.component.security.WebSecurity
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
-import com.synebula.gaea.domain.model.IAggregateRoot
-import com.synebula.gaea.domain.repository.IRepository
-import com.synebula.gaea.log.ILogger
-import com.synebula.gaea.mongo.query.MongoQuery
-import com.synebula.gaea.mongo.repository.MongoRepository
-import com.synebula.gaea.query.IQuery
-import com.synebula.zeus.domain.service.contr.component.IUserNotifier
+import com.synebula.gaea.domain.repository.IRepositoryFactory
+import com.synebula.gaea.mongodb.query.MongodbQueryFactory
+import com.synebula.gaea.mongodb.repository.MongodbRepositoryFactory
+import com.synebula.gaea.query.IQueryFactory
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.ComponentScan.Filter
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Primary
+import org.springframework.context.annotation.FilterType
 import org.springframework.data.mongodb.core.MongoTemplate
 
 
 @Configuration
-open class ZeusBeans {
-    @Bean
-    @Primary
-    open fun <T : IAggregateRoot<String>> repository(template: MongoTemplate)
-            : IRepository = MongoRepository(template)
+@ComponentScan(
+    basePackages = ["com.synebula.gaea.app.component"],
+    excludeFilters = [Filter(type = FilterType.ASSIGNABLE_TYPE, classes = [WebSecurity::class])]
+)
+class ZeusBeans {
 
     @Bean
-    @Primary
-    open fun <T> query(template: MongoTemplate, logger: ILogger? = null)
-            : IQuery = MongoQuery(template, logger)
+    fun repoFactory(template: MongoTemplate): IRepositoryFactory {
+        return MongodbRepositoryFactory(template)
+    }
 
     @Bean
-    open fun gson(): Gson = Gson()
+    fun queryFactory(template: MongoTemplate): IQueryFactory {
+        return MongodbQueryFactory(template)
+    }
 
     @Bean
-    open fun serializer(gson: Gson): IJsonSerializer {
+    fun gson(): Gson = Gson()
+
+    @Bean
+    fun serializer(gson: Gson): IJsonSerializer {
         return object : IJsonSerializer {
             override fun <S> serialize(src: S): String {
                 return gson.toJson(src)

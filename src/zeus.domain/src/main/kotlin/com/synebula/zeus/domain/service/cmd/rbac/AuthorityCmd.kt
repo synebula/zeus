@@ -1,13 +1,13 @@
-package com.synebula.zeus.domain.service.cmd.rbac.resource
+package com.synebula.zeus.domain.service.cmd.rbac
 
 import com.synebula.gaea.domain.service.Command
-import com.synebula.zeus.env.PermissionType
+import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.env.ResourceType
 
-class PermissionCmd : Command() {
+class AuthorityCmd : Command() {
     var id: String? = null
     var role = ""
     var resource = ""
     var type: ResourceType? = null
-    var authority = PermissionType.Allow
+    var authority = AuthorityType.Allow
 }
