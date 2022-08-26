@@ -16,5 +16,5 @@ class GroupApp(
     factory: IQueryFactory,
     logger: ILogger
 ) : Application<GroupCmd, GroupView, String>(
-    "分组信息", service, factory.createQuery(GroupView::class.java), logger
+    "用户组信息", service, factory.createQuery(GroupView::class.java), logger
 )

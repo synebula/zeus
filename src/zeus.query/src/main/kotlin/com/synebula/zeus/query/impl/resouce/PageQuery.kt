@@ -24,7 +24,7 @@ class PageQuery(template: MongoTemplate, var authorityQuery: IAuthorityQuery, va
             if (authority == AuthorityType.Deny)
                 return listOf()
         }
-        val params = mutableMapOf<String, Any>()
+        val params = mutableMapOf<String, String>()
         if (system != null) params["system"] = system
         val pages = this.list(params)
         val authorities = this.authorityQuery.authorized(ResourceType.Page, role)

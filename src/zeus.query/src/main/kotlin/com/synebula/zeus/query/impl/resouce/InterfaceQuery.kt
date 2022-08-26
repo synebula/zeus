@@ -26,7 +26,7 @@ class InterfaceQuery(
             if (authority == AuthorityType.Deny)
                 return listOf()
         }
-        val params = mutableMapOf<String, Any>()
+        val params = mutableMapOf<String, String>()
         if (system != null) params["system"] = system
         val interfaces = this.list(params)
         val authorities = this.authorityQuery.authorized(ResourceType.Interface, role)

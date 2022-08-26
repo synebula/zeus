@@ -1,7 +1,7 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
 import com.synebula.gaea.app.Application
-import com.synebula.gaea.app.struct.HttpMessage
+import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.spring.aop.annotation.Method
 import com.synebula.zeus.domain.service.cmd.rbac.resource.SystemCmd

@@ -12,7 +12,7 @@ class UserView {
 
     var password: String = ""
 
-    @Where(Operator.like)
+    @Where(Operator.Like)
     var realName: String? = null
 
     var phone: String? = null

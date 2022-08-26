@@ -1,7 +1,7 @@
 package com.synebula.zeus.app.controller.rbac
 
 import com.synebula.gaea.app.Application
-import com.synebula.gaea.app.struct.HttpMessage
+import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger

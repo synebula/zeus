@@ -9,7 +9,7 @@ import com.synebula.gaea.query.Where
 class GroupView {
     var id: String? = null
 
-    @Where(Operator.like)
+    @Where(Operator.Like)
     var name = ""
 
     var desc = ""

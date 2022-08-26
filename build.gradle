@@ -14,15 +14,13 @@ buildscript {
     }
 }
 
-allprojects {
+subprojects {
     group 'com.synebula'
     version version
-}
 
-subprojects {
     ext {
         version '0.9.0'
-        gaea_version = '1.2.0'
+        gaea_version = '1.4.0'
         spring_version = "2.7.0"
     }
 

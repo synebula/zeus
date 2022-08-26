@@ -1,13 +1,18 @@
 package com.synebula.zeus.domain.service.impl.rbac
 
+import com.synebula.gaea.bus.Subscribe
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.IObjectMapper
+import com.synebula.gaea.domain.event.BeforeRemoveEvent
 import com.synebula.gaea.domain.repository.IRepositoryFactory
 import com.synebula.gaea.domain.service.ICommand
 import com.synebula.gaea.domain.service.Service
+import com.synebula.gaea.exception.NoticeUserException
 import com.synebula.gaea.ext.toMd5
 import com.synebula.gaea.log.ILogger
+import com.synebula.zeus.domain.model.rbac.Group
+import com.synebula.zeus.domain.model.rbac.Role
 import com.synebula.zeus.domain.model.rbac.User
 import com.synebula.zeus.domain.service.component.IUserNotifier
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
@@ -20,24 +25,17 @@ class UserService(
     var logger: ILogger
 ) : Service<User, String>(User::class.java, factory.createRepository(User::class.java), mapper), IUserService {
 
-//    init {
-//        groupService.addBeforeRemoveListener(this.clazz.name) { id ->
-//            val msg = Message()
-//            if (this.repository.count(mapOf(Pair("group", id)), this.clazz) > 0) {
-//                msg.status = Status.Failure
-//                msg.message = "组下还有用户"
-//            }
-//            msg
-//        }
-//        roleService.addBeforeRemoveListener(this.clazz.name) { id ->
-//            val msg = Message()
-//            if (this.repository.count(mapOf(Pair("role", id)), this.clazz) > 0) {
-//                msg.status = Status.Failure
-//                msg.message = "角色下还有用户"
-//            }
-//            msg
-//        }
-//    }
+    @Subscribe(["groupBeforeRemoveEvent"])
+    fun beforeRoleRemove(event: BeforeRemoveEvent<Role, String>) {
+        if (this.repository.count(mapOf(Pair("role", event.id!!))) > 0)
+            throw NoticeUserException("角色下还有用户")
+    }
+
+    @Subscribe(["groupBeforeRemoveEvent"])
+    fun beforeGroupRemove(event: BeforeRemoveEvent<Group, String>) {
+        if (this.repository.count(mapOf(Pair("group", event.id!!))) > 0)
+            throw NoticeUserException("用户组下还有用户")
+    }
 
     override fun add(command: ICommand): DataMessage<String> {
         val user = this.map(command)
@@ -65,7 +63,7 @@ class UserService(
                 this.repository.update(user)
                 DataMessage(Status.Success, "用户${user.name}激活成功")
             } else {
-                logger.warn(this, "用户${user.name}激活失败, {key: ${key}, token: ${token}")
+                logger.warn(this, "用户${user.name}激活失败, {key: ${key}, token: $token")
                 DataMessage(Status.Failure, "用户${user.name}激活失败, 请从系统发送的邮件链接激活用户")
             }
         }
@@ -93,7 +91,10 @@ class UserService(
             this.repository.update(user)
             DataMessage()
         } else {
-            logger.warn(this, "用户重置${user.name}密码失败, 系统密码修改令牌:${user.token}, {key: ${key} , token: ${token}")
+            logger.warn(
+                this,
+                "用户重置${user.name}密码失败, 系统密码修改令牌:${user.token}, {key: $key , token: $token"
+            )
             DataMessage(Status.Failure, "用户重置密码失败, 如需重置密码请从系统发送的邮件链接中重置")
         }
     }
