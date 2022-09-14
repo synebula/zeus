@@ -14,7 +14,7 @@ dependencies {
     api project(":src:zeus.domain")
     api project(":src:zeus.query")
     api project(":src:zeus.repository")
-    api "com.synebula:gaea.app:$gaea_version"
+    api("com.synebula:gaea.app:$gaea_version")
     api "com.synebula:gaea.spring:$gaea_version"
     api "com.synebula:gaea.mongodb:$gaea_version"
 

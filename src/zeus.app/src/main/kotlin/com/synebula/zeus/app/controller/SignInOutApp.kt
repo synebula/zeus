@@ -1,8 +1,10 @@
 package com.synebula.zeus.app.controller
 
 import com.synebula.gaea.app.IApplication
-import com.synebula.gaea.app.component.security.TokenManager
+import com.synebula.gaea.app.component.security.session.UserSession
+import com.synebula.gaea.app.component.security.session.UserSessionManager
 import com.synebula.gaea.data.message.HttpMessage
+import com.synebula.gaea.data.message.HttpMessageFactory
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
 import com.synebula.gaea.log.ILogger
@@ -11,10 +13,8 @@ import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.contr.IUserQuery
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/sign")
@@ -27,10 +27,13 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
     lateinit var userService: IUserService
 
     @Autowired
-    lateinit var tokenHelper: TokenManager
+    lateinit var userSessionManager: UserSessionManager
 
     @Autowired
     lateinit var serializer: IJsonSerializer
+
+    @Autowired
+    override lateinit var httpMessageFactory: HttpMessageFactory
 
     override var name: String = "用户登录管理"
 
@@ -42,7 +45,7 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
             if (message.data != null) {
                 val user = message.data
                 user!!.remember = remember ?: false
-                val token = tokenHelper.sign(message.data!!)
+                val token = userSessionManager.signIn(user.uid, user)
                 it.data = token
             } else {
                 it.load(message)
@@ -50,10 +53,19 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
         }
     }
 
+
+    @Method("登录用户信息")
+    @GetMapping("/user")
+    fun signUser(): HttpMessage {
+        val userSession = SecurityContextHolder.getContext().authentication.principal as UserSession
+        return httpMessageFactory.create(userSession.user)
+    }
+
     @Method("用户登出")
     @PostMapping("/out")
-    fun signOut(user: String): HttpMessage {
-        return HttpMessage(user)
+    fun signOut(token: String): HttpMessage {
+        userSessionManager.signOut(token)
+        return this.httpMessageFactory.create(token)
     }
 
     @Method("用户注册")

@@ -1,6 +1,6 @@
 package com.synebula.zeus.domain.service.impl.rbac
 
-import com.synebula.gaea.bus.Subscribe
+import com.synebula.gaea.bus.DomainSubscribe
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.IObjectMapper
@@ -25,13 +25,13 @@ class UserService(
     var logger: ILogger
 ) : Service<User, String>(User::class.java, factory.createRepository(User::class.java), mapper), IUserService {
 
-    @Subscribe(["groupBeforeRemoveEvent"])
+    @DomainSubscribe(domainClass = Role::class, messageClass = BeforeRemoveEvent::class)
     fun beforeRoleRemove(event: BeforeRemoveEvent<Role, String>) {
         if (this.repository.count(mapOf(Pair("role", event.id!!))) > 0)
             throw NoticeUserException("角色下还有用户")
     }
 
-    @Subscribe(["groupBeforeRemoveEvent"])
+    @DomainSubscribe(BeforeRemoveEvent::class, Group::class)
     fun beforeGroupRemove(event: BeforeRemoveEvent<Group, String>) {
         if (this.repository.count(mapOf(Pair("group", event.id!!))) > 0)
             throw NoticeUserException("用户组下还有用户")

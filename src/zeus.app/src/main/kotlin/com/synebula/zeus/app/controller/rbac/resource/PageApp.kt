@@ -28,7 +28,7 @@ class PageApp(
     @Method("获取角色系统下有权页面")
     @GetMapping("/in-system/{system}/authorized/{role}")
     fun authorized(@PathVariable system: String, @PathVariable role: String): HttpMessage {
-        val msg = HttpMessage()
+        val msg = this.httpMessageFactory.create()
         msg.data = this.pageQuery.authorized(role, system)
         return msg
     }

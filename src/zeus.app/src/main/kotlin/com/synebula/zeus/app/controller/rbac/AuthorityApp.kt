@@ -25,7 +25,7 @@ class AuthorityApp(
     @PostMapping("/batch")
     fun add(@RequestBody cmd: AuthorityBatchAddCmd): HttpMessage {
         this.authorityService.add(cmd)
-        return HttpMessage()
+        return this.httpMessageFactory.create()
     }
 
     @Method("根据资源和角色删除权限")
@@ -36,6 +36,6 @@ class AuthorityApp(
         @RequestBody resource: List<String>
     ): HttpMessage {
         this.authorityService.removeByResourceRole(type, resource, role)
-        return HttpMessage()
+        return this.httpMessageFactory.create()
     }
 }

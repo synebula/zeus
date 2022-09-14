@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: gaea.app
+  sign-in-url: /sign/in
+  allow-multi-sign: false
   data:
     mongodb:
       uri: mongodb://127.0.0.1/zeus
