@@ -11,11 +11,12 @@ apply plugin: 'kotlin-spring'
 jar.enabled = true    //jar SKIPPED问题,不设置可能会无法打jar
 
 dependencies {
-    compile project(":src:zeus.domain")
-    compile project(":src:zeus.query")
-    compile project(":src:zeus.repository")
-    compile "com.synebula:gaea.app:$gaea_version"
-    compile "com.synebula:gaea.mongo:$gaea_version"
+    api project(":src:zeus.domain")
+    api project(":src:zeus.query")
+    api project(":src:zeus.repository")
+    api "com.synebula:gaea.app:$gaea_version"
+    api "com.synebula:gaea.spring:$gaea_version"
+    api "com.synebula:gaea.mongodb:$gaea_version"
 
 }
 

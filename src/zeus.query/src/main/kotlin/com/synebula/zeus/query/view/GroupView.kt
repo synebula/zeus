@@ -1,14 +1,15 @@
 package com.synebula.zeus.query.view
 
-import com.synebula.gaea.query.annotation.Table
-import com.synebula.gaea.query.annotation.Where
-import com.synebula.gaea.query.type.Operator
+import com.synebula.gaea.query.Operator
+import com.synebula.gaea.query.Table
+import com.synebula.gaea.query.Where
+
 
 @Table("group")
 class GroupView {
     var id: String? = null
 
-    @Where(Operator.like)
+    @Where(Operator.Like)
     var name = ""
 
     var desc = ""

@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.component
 
-import com.synebula.gaea.app.component.aop.AppAspect
+import com.synebula.gaea.spring.aop.AppAspect
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.springframework.stereotype.Component

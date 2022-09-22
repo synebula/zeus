@@ -5,7 +5,7 @@ import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.env.ResourceType
 import com.synebula.zeus.query.view.AuthorityView
 
-interface IAuthorityQuery : IQuery {
+interface IAuthorityQuery : IQuery<AuthorityView, String>  {
 
     /**
      * 获取角色已授权的资源

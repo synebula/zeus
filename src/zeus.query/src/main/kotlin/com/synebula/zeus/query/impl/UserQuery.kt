@@ -3,7 +3,8 @@ package com.synebula.zeus.query.impl
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.ext.toMd5
-import com.synebula.gaea.mongo.whereId
+import com.synebula.gaea.mongodb.query.MongodbQuery
+import com.synebula.gaea.mongodb.whereId
 import com.synebula.zeus.query.contr.IUserQuery
 import com.synebula.zeus.query.view.GroupView
 import com.synebula.zeus.query.view.RoleView
@@ -14,8 +15,8 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 
-class UserQuery(var template: MongoTemplate) : IUserQuery {
-    private val clazz = UserView::class.java
+class UserQuery(template: MongoTemplate) :
+    MongodbQuery<UserView, String>(UserView::class.java, template), IUserQuery {
 
     override fun signIn(name: String, password: String): DataMessage<SignUserView> {
         val query = Query.query(

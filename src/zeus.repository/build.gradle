@@ -1,7 +1,7 @@
 dependencies {
-    compile project(":src:zeus.env")
-    compile project(":src:zeus.domain")
-    compile "com.synebula:gaea.mongo:$gaea_version"
+    api project(":src:zeus.env")
+    api project(":src:zeus.domain")
+    api "com.synebula:gaea.mongodb:$gaea_version"
 }
 
 publishing {

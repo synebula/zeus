@@ -1,9 +1,9 @@
 package com.synebula.zeus.app.controller.rbac
 
 import com.synebula.gaea.app.Application
-import com.synebula.gaea.app.component.aop.annotation.MethodName
-import com.synebula.gaea.app.struct.HttpMessage
+import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.log.ILogger
+import com.synebula.gaea.spring.aop.annotation.Method
 import com.synebula.zeus.domain.service.cmd.rbac.AuthorityBatchAddCmd
 import com.synebula.zeus.domain.service.cmd.rbac.AuthorityCmd
 import com.synebula.zeus.domain.service.contr.rbac.IAuthorityService
@@ -19,17 +19,16 @@ class AuthorityApp(
     logger: ILogger,
     private var authorityService: IAuthorityService
 ) : Application<AuthorityCmd, AuthorityView, String>(
-    "权限信息", AuthorityView::class.java,
-    authorityService, query, logger
+    "权限信息", authorityService, query, logger
 ) {
-    @MethodName("批量添加权限信息")
+    @Method("批量添加权限信息")
     @PostMapping("/batch")
     fun add(@RequestBody cmd: AuthorityBatchAddCmd): HttpMessage {
         this.authorityService.add(cmd)
         return HttpMessage()
     }
 
-    @MethodName("根据资源和角色删除权限")
+    @Method("根据资源和角色删除权限")
     @DeleteMapping("/{type}/role/{role}")
     fun removeByResourceRole(
         @PathVariable type: ResourceType,

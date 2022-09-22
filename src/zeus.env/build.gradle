@@ -1,5 +1,5 @@
 dependencies {
-    compile "com.synebula:gaea:$gaea_version"
+    api "com.synebula:gaea:$gaea_version"
 }
 
 publishing {
