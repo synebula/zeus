@@ -30,5 +30,6 @@ class SignUserView(
      * 组名称
      */
     var gname: String = "",
-    var remember: Boolean = false
+    var remember: Boolean = false,
+    var token: String = ""
 )

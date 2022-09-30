@@ -43,10 +43,11 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
         return this.safeExecute("用户登录出现异常") {
             val message = this.userQuery.signIn(name, password)
             if (message.data != null) {
-                val user = message.data
-                user!!.remember = remember ?: false
+                val user = message.data!!
                 val token = userSessionManager.signIn(user.uid, user)
-                it.data = token
+                user.remember = remember ?: false
+                user.token = token
+                it.data = user
             } else {
                 it.load(message)
             }
@@ -63,9 +64,13 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
 
     @Method("用户登出")
     @PostMapping("/out")
-    fun signOut(token: String): HttpMessage {
-        userSessionManager.signOut(token)
-        return this.httpMessageFactory.create(token)
+    fun signOut(): HttpMessage {
+        val token = this.userSession()?.token
+        return if (token != null) {
+            userSessionManager.signOut(token)
+            this.httpMessageFactory.create(token)
+        } else
+            this.httpMessageFactory.create(Status.Unauthorized, "")
     }
 
     @Method("用户注册")
