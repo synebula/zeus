@@ -1,5 +1,7 @@
 package com.synebula.zeus.query.view
 
+import com.synebula.gaea.data.permission.PermissionType
+
 class SignUserView(
     /**
      * 用户id
@@ -30,6 +32,7 @@ class SignUserView(
      * 组名称
      */
     var gname: String = "",
+    var permissionType: PermissionType = PermissionType.Minimum,
     var remember: Boolean = false,
     var token: String = ""
 )

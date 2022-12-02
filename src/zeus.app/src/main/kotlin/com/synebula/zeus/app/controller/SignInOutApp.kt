@@ -1,8 +1,8 @@
 package com.synebula.zeus.app.controller
 
-import com.synebula.gaea.app.IApplication
-import com.synebula.gaea.app.component.security.session.UserSession
-import com.synebula.gaea.app.component.security.session.UserSessionManager
+import com.synebula.gaea.app.controller.IApplication
+import com.synebula.gaea.app.security.session.UserSession
+import com.synebula.gaea.app.security.session.UserSessionManager
 import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.data.message.HttpMessageFactory
 import com.synebula.gaea.data.message.Status

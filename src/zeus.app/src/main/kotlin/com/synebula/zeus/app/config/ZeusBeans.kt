@@ -8,16 +8,11 @@ import com.synebula.gaea.mongodb.query.MongodbQueryFactory
 import com.synebula.gaea.mongodb.repository.MongodbRepositoryFactory
 import com.synebula.gaea.query.IQueryFactory
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
 
-
 @Configuration
-@ComponentScan(basePackages = ["com.synebula.gaea.app.component"])
 class ZeusBeans {
-
-    @Bean
     fun repoFactory(template: MongoTemplate): IRepositoryFactory {
         return MongodbRepositoryFactory(template)
     }

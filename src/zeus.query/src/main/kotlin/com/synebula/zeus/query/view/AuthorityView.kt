@@ -1,6 +1,6 @@
 package com.synebula.zeus.query.view
 
-import com.synebula.zeus.env.AuthorityType
+import com.synebula.gaea.data.permission.AuthorityType
 import com.synebula.zeus.env.ResourceType
 
 class AuthorityView() {

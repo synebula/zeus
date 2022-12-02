@@ -1,7 +1,7 @@
 package com.synebula.zeus.query.impl.resouce
 
+import com.synebula.gaea.data.permission.AuthorityType
 import com.synebula.gaea.mongodb.query.MongodbQuery
-import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.env.ResourceType
 import com.synebula.zeus.query.contr.IAuthorityQuery
 import com.synebula.zeus.query.contr.resouce.IPageQuery

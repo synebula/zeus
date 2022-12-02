@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.Application
+import com.synebula.gaea.app.controller.Application
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.query.IQueryFactory
 import com.synebula.zeus.domain.service.cmd.rbac.RoleCmd

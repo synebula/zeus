@@ -1,7 +1,7 @@
 package com.synebula.zeus.domain.model.rbac
 
+import com.synebula.gaea.data.permission.AuthorityType
 import com.synebula.gaea.domain.model.AggregateRoot
-import com.synebula.zeus.env.AuthorityType
 import com.synebula.zeus.env.ResourceType
 
 class Authority(override var id: String? = null) : AggregateRoot<String>() {

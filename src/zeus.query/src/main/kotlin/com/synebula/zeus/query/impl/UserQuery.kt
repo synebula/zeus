@@ -2,6 +2,7 @@ package com.synebula.zeus.query.impl
 
 import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
+import com.synebula.gaea.data.permission.PermissionType
 import com.synebula.gaea.ext.toMd5
 import com.synebula.gaea.mongodb.query.MongodbQuery
 import com.synebula.gaea.mongodb.whereId
@@ -32,7 +33,8 @@ class UserQuery(template: MongoTemplate) :
                 SignUserView(
                     user.id, user.realName ?: "",
                     user.role ?: "", role?.name ?: "",
-                    user.group ?: "", group?.name ?: ""
+                    user.group ?: "", group?.name ?: "",
+                    role?.permissionType ?: PermissionType.None
                 )
             )
         } else

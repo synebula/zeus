@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component
 @Component
 class ZeusAspect : AppAspect() {
 
-    @Pointcut("target(com.synebula.gaea.app.IApplication)")
+    /**
+     * 切片执行所有继承[com.synebula.gaea.app.controller.IApplication]接口的类
+     */
+    @Pointcut("target(com.synebula.gaea.app.controller.IApplication)")
     override fun func() {
     }
 }
