@@ -12,6 +12,7 @@ import com.synebula.gaea.spring.aop.annotation.Method
 import com.synebula.zeus.domain.service.cmd.rbac.UserCmd
 import com.synebula.zeus.domain.service.contr.rbac.IUserService
 import com.synebula.zeus.query.contr.IUserQuery
+import com.synebula.zeus.query.view.UserView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
@@ -77,7 +78,7 @@ class SignInOutApp(override var logger: ILogger) : IApplication {
     @PostMapping("/up")
     fun signUp(@RequestBody command: UserCmd): HttpMessage {
         return this.safeExecute("用户注册出错, 用户信息: ${serializer.serialize(command)}") {
-            val list = this.userQuery.list(mapOf(Pair("name", command.name)))
+            val list = this.userQuery.list(mapOf(Pair("name", command.name)), UserView::class.java)
             if (list.isEmpty()) {
                 val message = userService.add(command)
                 it.data = message.data

@@ -10,6 +10,6 @@ class UserCmd : Command() {
     var phone: String? = null
     var role: String? = null
     var group: String = ""
-    var alive: Boolean = false
+    var avalible: Boolean = false
     var token: String? = null
 }

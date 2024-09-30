@@ -41,7 +41,7 @@ class UserService(
         val user = this.map(command)
         user.password = user.password.toMd5()
         user.token = UUID.randomUUID().toString()
-        user.alive = false
+        user.avalible = false
         this.repository.add(user)
         userNotifier?.added(user.id!!, user.name, user.token!!)
         return DataMessage(user.id!!)
@@ -54,11 +54,11 @@ class UserService(
      */
     override fun active(key: String, token: String): DataMessage<Any> {
         val user = this.repository.get(key)!!
-        return if (user.alive) {
+        return if (user.avalible) {
             DataMessage("用户${user.name}无需重复激活")
         } else {
             if (token == user.token) {
-                user.alive = true
+                user.avalible = true
                 user.token = null
                 this.repository.update(user)
                 DataMessage(Status.Success, "用户${user.name}激活成功")
@@ -101,7 +101,7 @@ class UserService(
 
     override fun forgotPassword(key: String): DataMessage<String> {
         val user = this.repository.get(key)!!
-        return if (user.alive) {
+        return if (user.avalible) {
             user.token = UUID.randomUUID().toString()
             this.repository.update(user)
             userNotifier?.forgot(user.id!!, user.name, user.token!!)

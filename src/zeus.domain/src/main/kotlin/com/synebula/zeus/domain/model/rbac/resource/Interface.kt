@@ -4,5 +4,5 @@ import com.synebula.gaea.domain.model.IAggregateRoot
 
 class Interface : Resource(), IAggregateRoot<String> {
     var system = ""
-    override var alive = true
+    override var avalible = true
 }

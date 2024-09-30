@@ -1,7 +1,7 @@
 package com.synebula.zeus.query.impl.resouce
 
 import com.synebula.gaea.data.permission.AuthorityType
-import com.synebula.gaea.mongodb.query.MongodbQuery
+import com.synebula.gaea.mongodb.db.MongodbQuery
 import com.synebula.zeus.env.ResourceType
 import com.synebula.zeus.query.contr.IAuthorityQuery
 import com.synebula.zeus.query.contr.resouce.IInterfaceQuery
@@ -13,7 +13,7 @@ class InterfaceQuery(
     template: MongoTemplate,
     var authorityQuery: IAuthorityQuery,
     var systemQuery: ISystemQuery
-) : MongodbQuery<InterfaceView, String>(InterfaceView::class.java, template), IInterfaceQuery {
+) : MongodbQuery(template), IInterfaceQuery {
 
     override fun authorized(role: String): List<InterfaceView> {
         return this.authorized(role, null)
@@ -28,7 +28,7 @@ class InterfaceQuery(
         }
         val params = mutableMapOf<String, String>()
         if (system != null) params["system"] = system
-        val interfaces = this.list(params)
+        val interfaces = this.list(params, InterfaceView::class.java)
         val authorities = this.authorityQuery.authorized(ResourceType.Interface, role)
         return interfaces.filter { i ->
             val authority = authorities.find { p -> i.id == p.resource }

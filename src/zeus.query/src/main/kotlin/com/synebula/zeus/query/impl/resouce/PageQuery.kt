@@ -1,7 +1,7 @@
 package com.synebula.zeus.query.impl.resouce
 
 import com.synebula.gaea.data.permission.AuthorityType
-import com.synebula.gaea.mongodb.query.MongodbQuery
+import com.synebula.gaea.mongodb.db.MongodbQuery
 import com.synebula.zeus.env.ResourceType
 import com.synebula.zeus.query.contr.IAuthorityQuery
 import com.synebula.zeus.query.contr.resouce.IPageQuery
@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
 class PageQuery(template: MongoTemplate, var authorityQuery: IAuthorityQuery, var systemQuery: ISystemQuery) :
-    MongodbQuery<PageView, String>(PageView::class.java, template), IPageQuery {
+    MongodbQuery(template), IPageQuery {
 
     override fun authorized(role: String): List<PageView> {
         return this.authorized(role, null)
@@ -26,7 +26,7 @@ class PageQuery(template: MongoTemplate, var authorityQuery: IAuthorityQuery, va
         }
         val params = mutableMapOf<String, String>()
         if (system != null) params["system"] = system
-        val pages = this.list(params)
+        val pages = this.list(params, PageView::class.java)
         val authorities = this.authorityQuery.authorized(ResourceType.Page, role)
         return pages.filter { i ->
             val authority = authorities.find { p -> i.id == p.resource }
@@ -41,7 +41,7 @@ class PageQuery(template: MongoTemplate, var authorityQuery: IAuthorityQuery, va
     override fun uriAuthorize(path: String, role: String): AuthorityType? {
         val page = this.template.findOne(
             Query.query(Criteria.where("uri").`is`(path)),
-            this.clazz, this.collection(this.clazz)
+            PageView::class.java, this.collection(PageView::class.java)
         ) ?: return null
         return this.authorize(page.id!!, role)
     }

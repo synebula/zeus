@@ -3,5 +3,6 @@ gradlew*
 build
 gradle
 logs
+bin
 
 !.gitignore

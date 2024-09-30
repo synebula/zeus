@@ -1,23 +1,23 @@
 server:
-  port: 8080
+  port: 80
 
 spring:
   application:
     name: gaea.app
   sign-in-url: /sign/in
-  allow-multi-sign: false
+  allow-multi-sign: ${ALLOW_MULTI_SIGN:false}
   data:
     mongodb:
-      uri: mongodb://127.0.0.1/zeus
+      uri: ${DB_URL:mongodb://root:LcY221815@127.0.0.1/zeus}
   mail:
     send: true
     target: ge.com
-    sender: gehsrv@163.com
-    protocol: smtp
-    host: smtp.163.com
-    port: 465
-    username: gehsrv@163.com
-    password: SRBPJBLFFVVCPZLZ
+    sender: ${MAIL_SENDER:gehsrv@163.com}
+    protocol: ${MAIL_SENDER:smtp}
+    host: ${MAIL_HOST:smtp.163.com}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USER:gehsrv@163.com}
+    password: ${MAIL_PWD:SRBPJBLFFVVCPZLZ}
     default-encoding: UTF-8
     properties:
       mail:

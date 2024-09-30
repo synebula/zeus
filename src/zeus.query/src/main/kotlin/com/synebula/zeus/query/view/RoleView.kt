@@ -1,7 +1,7 @@
 package com.synebula.zeus.query.view
 
 import com.synebula.gaea.data.permission.PermissionType
-import com.synebula.gaea.query.Table
+import com.synebula.gaea.db.query.Table
 
 @Table("role")
 class RoleView {

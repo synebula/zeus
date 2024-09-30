@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.controller.Application
+import com.synebula.gaea.app.controller.DomainApplication
 import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.spring.aop.annotation.Method
@@ -18,8 +18,8 @@ class AuthorityApp(
     query: IAuthorityQuery,
     logger: ILogger,
     private var authorityService: IAuthorityService
-) : Application<AuthorityCmd, AuthorityView, String>(
-    "权限信息", authorityService, query, logger
+) : DomainApplication<AuthorityCmd, AuthorityView, String>(
+    "权限信息", authorityService, query, AuthorityView::class.java, logger
 ) {
     @Method("批量添加权限信息")
     @PostMapping("/batch")

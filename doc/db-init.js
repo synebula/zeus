@@ -1,21 +1,16 @@
-db.role.insertMany([
+db = db.getSiblingDB('zeus');
+db.createUser(
+    {
+        user: "root",
+        pwd: "LcY221815",
+        roles:[ { role: "dbOwner", db: "zeus" }]
+    }
+)
+db.role.insertOne(
   {
     _id: "admin",
     name: "管理员"
-  },
-  {
-    _id: "VE",
-    name: "Viewer"
-  },
-  {
-    _id: "RE",
-    name: "RE工程师"
-  },
-  {
-    _id: "FE",
-    name: "FE工程师"
   }
-]
 );
 
 db.group.insertOne(
@@ -32,7 +27,7 @@ db.user.insertOne({
   phone: "18654551561",
   role: "admin",
   group: "1",
-  alive: true,
+  avalible: true,
   _class: "com.synebula.zeus.domain.model.rbac.User"
 });
 
@@ -55,14 +50,14 @@ db.page.insertMany([
 ])
 
 db.authority.insertMany([
-  { "role": "admin", "resource": "1", "type": "System", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "1", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "2", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "3", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "4", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "5", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "6", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "7", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
-  { "role": "admin", "resource": "8", "type": "Page", "authority": "Allow", "alive": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "1", "type": "System", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "1", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "2", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "3", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "4", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "5", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "6", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "7", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
+  { "role": "admin", "resource": "8", "type": "Page", "authority": "Allow", "avalible": true, "_class": "com.synebula.zeus.domain.model.rbac.Authority" },
 ])
 

@@ -1,0 +1,45 @@
+services:
+  app:
+    image: com.synebula/zeus
+    restart: always
+    container_name: zeus.app
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./bin/logs:/app/logs
+      - /etc/hosts:/etc/hosts
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/timezone
+    ports:
+      - 8080:80
+    environment:
+      - TZ=Asia/Shanghai
+      - DB_URL=mongodb://root:LcY221815@db/zeus
+
+  db:
+    container_name: zeus.db
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./bin/sct:/sct
+      - ./bin/data:/data/db
+      - ./bin/backup:/data/backup
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=LcY221815
+    restart: unless-stopped
+    
+#  ui:
+#    image: nginx:mainline-alpine
+#    restart: always
+#    container_name: zeus.ui
+#    links:
+#      - app
+#    volumes:
+#      - ./conf/ui:/etc/nginx/conf.d/
+#      - ./bin/ui:/app
+#      - /usr/share/zoneinfo/Asia/Shanghai:/etc/timezone
+#    ports:
+#      - 80:80
+#      - 443:443

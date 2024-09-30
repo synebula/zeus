@@ -14,6 +14,6 @@ class PageView : ResourceView() {
     // 所属系统
     var system = ""
 
-    var alive = true
+    var avalible = true
 
 }

@@ -1,11 +1,18 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 buildscript {
     ext {
-        kotlin_version = '1.6.10'
+        jvm_version = '21'
+        kotlin_version = '2.0.0'
+        gaea_version = '1.7.0'
+        spring_version = "3.3.0"
     }
 
     repositories {
         mavenLocal()
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
         mavenCentral()
     }
 
@@ -19,9 +26,7 @@ subprojects {
     version version
 
     ext {
-        version '0.9.0'
-        gaea_version = '1.5.1'
-        spring_version = "2.7.0"
+        version '1.0.0'
     }
 
     buildscript {
@@ -34,6 +39,7 @@ subprojects {
 
     repositories {
         mavenLocal()
+        maven { url 'https://git.synebula.com/api/packages/alex/maven' }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         mavenCentral()
     }
@@ -49,13 +55,17 @@ subprojects {
         testApi group: 'junit', name: 'junit', version: '4.12'
     }
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
+    /*** 指定 Java & Kotlin 语言编译目标JVM ***/
+    sourceCompatibility = "$jvm_version"
+    targetCompatibility = "$jvm_version"
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        compilerOptions {
+            jvmTarget = JvmTarget.valueOf("JVM_$jvm_version")
+        }
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        compilerOptions {
+            jvmTarget = JvmTarget.valueOf("JVM_$jvm_version")
+        }
     }
 }

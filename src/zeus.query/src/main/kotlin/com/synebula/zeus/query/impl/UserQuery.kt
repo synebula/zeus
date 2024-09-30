@@ -4,7 +4,7 @@ import com.synebula.gaea.data.message.DataMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.permission.PermissionType
 import com.synebula.gaea.ext.toMd5
-import com.synebula.gaea.mongodb.query.MongodbQuery
+import com.synebula.gaea.mongodb.db.MongodbQuery
 import com.synebula.gaea.mongodb.whereId
 import com.synebula.zeus.query.contr.IUserQuery
 import com.synebula.zeus.query.view.GroupView
@@ -17,15 +17,15 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 
 class UserQuery(template: MongoTemplate) :
-    MongodbQuery<UserView, String>(UserView::class.java, template), IUserQuery {
+    MongodbQuery(template), IUserQuery {
 
     override fun signIn(name: String, password: String): DataMessage<SignUserView> {
         val query = Query.query(
             Criteria.where("name").isEqualTo(name)
                 .and("password").isEqualTo(password.toMd5())
-                .and("alive").isEqualTo(true)
+                .and("avalible").isEqualTo(true)
         )
-        val user = this.template.findOne(query, this.clazz, "user")
+        val user = this.template.findOne(query, UserView::class.java, "user")
         return if (user != null) {
             val role = this.template.findOne(whereId(user.role), RoleView::class.java, "role")
             val group = this.template.findOne(whereId(user.group), GroupView::class.java, "group")
@@ -43,6 +43,6 @@ class UserQuery(template: MongoTemplate) :
 
 
     override fun listUsers(idList: List<String>): List<UserView> {
-        return this.template.find(Query.query(Criteria.where("_id").`in`(idList)), this.clazz, "user")
+        return this.template.find(Query.query(Criteria.where("_id").`in`(idList)), UserView::class.java, "user")
     }
 }

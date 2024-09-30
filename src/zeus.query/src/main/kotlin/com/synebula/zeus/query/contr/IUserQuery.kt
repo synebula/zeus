@@ -1,11 +1,11 @@
 package com.synebula.zeus.query.contr
 
 import com.synebula.gaea.data.message.DataMessage
-import com.synebula.gaea.query.IQuery
+import com.synebula.gaea.db.query.IQuery
 import com.synebula.zeus.query.view.SignUserView
 import com.synebula.zeus.query.view.UserView
 
-interface IUserQuery : IQuery<UserView, String> {
+interface IUserQuery : IQuery {
     /**
      * 登录接口
      *

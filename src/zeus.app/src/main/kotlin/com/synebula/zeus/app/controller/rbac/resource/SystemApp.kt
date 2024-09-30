@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
-import com.synebula.gaea.app.controller.Application
+import com.synebula.gaea.app.controller.DomainApplication
 import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.spring.aop.annotation.Method
@@ -19,8 +19,8 @@ class SystemApp(
     service: ISystemService,
     logger: ILogger,
     var systemQuery: ISystemQuery
-) : Application<SystemCmd, SystemView, String>(
-    "系统信息", service, systemQuery, logger
+) : DomainApplication<SystemCmd, SystemView, String>(
+    "系统信息", service, systemQuery, SystemView::class.java, logger
 ) {
     @Method("获取角色有权系统")
     @GetMapping("/authorized/{role}")

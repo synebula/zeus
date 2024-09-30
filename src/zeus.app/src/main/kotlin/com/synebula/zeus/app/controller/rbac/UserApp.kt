@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac
 
-import com.synebula.gaea.app.controller.Application
+import com.synebula.gaea.app.controller.DomainApplication
 import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.data.message.Status
 import com.synebula.gaea.data.serialization.json.IJsonSerializer
@@ -18,8 +18,8 @@ class UserApp(
     service: IUserService,
     query: IUserQuery,
     logger: ILogger
-) : Application<UserCmd, UserView, String>(
-    "用户信息", service, query, logger
+) : DomainApplication<UserCmd, UserView, String>(
+    "用户信息", service, query, UserView::class.java, logger
 ) {
 
     @Autowired
@@ -27,7 +27,7 @@ class UserApp(
 
     override fun add(command: UserCmd): HttpMessage {
         return this.safeExecute("查询重复用户信息出错, 用户信息: ${serializer.serialize(command)}") {
-            val list = this.query.list(mapOf(Pair("name", command.name)))
+            val list = this.query.list(mapOf(Pair("name", command.name)), UserView::class.java)
             if (list.isEmpty())
                 it.from(super.add(command))
             else {
@@ -53,7 +53,7 @@ class UserApp(
     @GetMapping("/{name}/forgot")
     fun forgot(@PathVariable name: String): HttpMessage {
         return this.safeExecute("遗忘用户密码出现异常") {
-            val users = this.query.list(mapOf(Pair("name", name)))
+            val users = this.query.list(mapOf(Pair("name", name)), UserView::class.java)
             if (users.isNotEmpty()) {
                 it.load((this.service as IUserService).forgotPassword(users[0].id))
 

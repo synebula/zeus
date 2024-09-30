@@ -1,11 +1,11 @@
 package com.synebula.zeus.query.contr
 
 import com.synebula.gaea.data.permission.AuthorityType
-import com.synebula.gaea.query.IQuery
+import com.synebula.gaea.db.query.IQuery
 import com.synebula.zeus.env.ResourceType
 import com.synebula.zeus.query.view.AuthorityView
 
-interface IAuthorityQuery : IQuery<AuthorityView, String>  {
+interface IAuthorityQuery : IQuery {
 
     /**
      * 获取角色已授权的资源

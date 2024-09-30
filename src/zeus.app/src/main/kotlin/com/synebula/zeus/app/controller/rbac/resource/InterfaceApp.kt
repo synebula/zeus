@@ -1,6 +1,6 @@
 package com.synebula.zeus.app.controller.rbac.resource
 
-import com.synebula.gaea.app.controller.Application
+import com.synebula.gaea.app.controller.DomainApplication
 import com.synebula.gaea.data.message.HttpMessage
 import com.synebula.gaea.log.ILogger
 import com.synebula.gaea.spring.aop.annotation.Method
@@ -19,8 +19,8 @@ class InterfaceApp(
     service: IInterfaceService,
     logger: ILogger,
     var interfaceQuery: IInterfaceQuery
-) : Application<InterfaceCmd, InterfaceView, String>(
-    "接口信息", service, interfaceQuery, logger
+) : DomainApplication<InterfaceCmd, InterfaceView, String>(
+    "接口信息", service, interfaceQuery, InterfaceView::class.java, logger
 ) {
 
     @Method("获取角色系统下有权接口")

@@ -16,6 +16,6 @@ class Page : Resource(), IAggregateRoot<String> {
     // 所属系统
     var system = ""
 
-    override var alive = true
+    override var avalible = true
 
 }

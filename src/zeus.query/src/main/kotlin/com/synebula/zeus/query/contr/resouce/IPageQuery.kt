@@ -1,14 +1,14 @@
 package com.synebula.zeus.query.contr.resouce
 
 import com.synebula.gaea.data.permission.AuthorityType
-import com.synebula.gaea.query.IQuery
+import com.synebula.gaea.db.query.IQuery
 import com.synebula.zeus.query.view.resource.PageView
 
-interface IPageQuery : IQuery<PageView, String>  {
+interface IPageQuery : IQuery {
 
     fun authorized(role: String): List<PageView>
 
-    fun authorized(role: String, system: String? ): List<PageView>
+    fun authorized(role: String, system: String?): List<PageView>
 
     fun authorize(resource: String, role: String): AuthorityType?
 
